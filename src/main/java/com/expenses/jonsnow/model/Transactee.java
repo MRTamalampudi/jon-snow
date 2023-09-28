@@ -2,6 +2,8 @@ package com.expenses.jonsnow.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "transactee")
 public class Transactee {
@@ -15,4 +17,10 @@ public class Transactee {
 
     @Column(name = "description")
     private String description;
+
+    @OneToMany(
+            mappedBy = "transactee",
+            fetch = FetchType.LAZY
+    )
+    private List<Transaction> transactions;
 }
