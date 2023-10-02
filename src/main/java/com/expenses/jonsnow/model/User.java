@@ -12,18 +12,18 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
 
     @Column(name = "email")
     private String email;
 
     @Column(name = "mobile")
     private String mobile;
-    @Column(name = "dark_mode")
-    private Boolean darkMode;
 
-    private String currency;
 
     @OneToMany(
             mappedBy = "user",
@@ -53,10 +53,10 @@ public class User {
 
     @OneToMany(
             mappedBy = "user",
-            targetEntity = BillShare.class,
+            targetEntity = SplitBillShare.class,
             fetch = FetchType.LAZY
     )
-    private List<BillShare> billShares;
+    private List<SplitBillShare> splitBillShares;
 
     @OneToMany(
             mappedBy = "user",
@@ -78,5 +78,9 @@ public class User {
     )
     private List<SplitBillGroupMember> groupsList;
 
-
+    @OneToOne(
+            mappedBy = "user",
+            fetch = FetchType.LAZY
+    )
+    private UserPreferences userPreferences;
 }

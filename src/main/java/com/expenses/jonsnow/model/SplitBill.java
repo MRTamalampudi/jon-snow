@@ -53,6 +53,6 @@ public class SplitBill {
             mappedBy = "bill",
             fetch = FetchType.LAZY
     )
-    private List<BillShare> billShareList;
+    private List<SplitBillShare> splitBillShareList;
 
 }

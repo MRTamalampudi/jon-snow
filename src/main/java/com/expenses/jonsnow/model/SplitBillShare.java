@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "split_bill_members")
-public class BillShare {
+public class SplitBillShare {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
