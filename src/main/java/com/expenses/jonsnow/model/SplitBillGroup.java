@@ -25,8 +25,8 @@ public class SplitBillGroup {
     @JoinColumn(name = "created_by")
     private User user;
 
-    @Column(name = "created_by")
-    private Long createdBy;
+//    @Column(name = "created_by")
+//    private Long createdBy;
 
     @Column(name = "date")
     private Instant date;
@@ -36,6 +36,4 @@ public class SplitBillGroup {
             fetch = FetchType.LAZY
     )
     private List<SplitBillGroupMember> memberList;
-
-
 }

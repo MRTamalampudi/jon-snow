@@ -38,7 +38,7 @@ public class User {
     private List<Category> categories;
 
     @OneToMany(
-            mappedBy = "user",
+            mappedBy = "paidBy",
             fetch = FetchType.LAZY
     )
     private List<SplitBill> splitBills;
@@ -78,9 +78,12 @@ public class User {
     )
     private List<SplitBillGroupMember> groupsList;
 
-    @OneToOne(
+    @OneToOne(fetch = FetchType.LAZY)
+    private UserPreferences userPreferences;
+
+    @OneToMany(
             mappedBy = "user",
             fetch = FetchType.LAZY
     )
-    private UserPreferences userPreferences;
+    private List<Transactee> transactees;
 }

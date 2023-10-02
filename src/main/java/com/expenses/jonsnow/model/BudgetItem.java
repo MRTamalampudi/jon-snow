@@ -22,8 +22,8 @@ public class BudgetItem {
     @JoinColumn(name = "budget_id")
     private Budget budget;
 
-    @Column(name = "budget_id")
-    private Long budget_id;
+//    @Column(name = "budget_id")
+//    private Long budget_id;
 
     @OneToOne(
             targetEntity = Transaction.class,
@@ -32,6 +32,6 @@ public class BudgetItem {
     @JoinColumn(name = "transaction_id")
     private Transaction transaction;
 
-    @Column(name = "transaction_id")
-    private Long transactionId;
+//    @Column(name = "transaction_id")
+//    private Long transactionId;
 }

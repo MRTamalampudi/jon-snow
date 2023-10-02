@@ -11,12 +11,12 @@ public class SplitBillShare {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(targetEntity = SplitBill.class)
+    @ManyToOne
     @JoinColumn(name = "split_bill_id")
     private SplitBill bill;
 
-    @Column(name = "split_bill_id")
-    private Long splitBillId;
+//    @Column(name = "split_bill_id")
+//    private Long splitBillId;
 
     @Column(name = "transaction_type")
     private TransactionType type; //Allow only OWE and LENT;
@@ -34,6 +34,6 @@ public class SplitBillShare {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "user_id")
-    private Long userId;
+//    @Column(name = "user_id")
+//    private Long userId;
 }

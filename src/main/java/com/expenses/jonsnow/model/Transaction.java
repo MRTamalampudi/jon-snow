@@ -46,22 +46,22 @@ public class Transaction {
     @JoinColumn(name = "split_bill_id")
     private SplitBill splitBill;
 
-    @Column(name = "split_bill_id")
-    private Long splitBill_id;
+//    @Column(name = "split_bill_id")
+//    private Long splitBill_id;
 
     @ManyToOne(targetEntity = Budget.class)
     @JoinColumn(name = "budget_id")
     private Budget budget;
 
-    @Column(name = "budget_id")
-    private Long budgetId;
+//    @Column(name = "budget_id")
+//    private Long budgetId;
 
     @ManyToOne(targetEntity = Transactee.class)
     @JoinColumn(name = "transactee_id")
     private Transactee transactee;
 
-    @Column(name = "transactee_id")
-    private Long transacteeId;
+//    @Column(name = "transactee_id")
+//    private Long transacteeId;
 
     @OneToOne(
             targetEntity = BudgetItem.class,
@@ -70,6 +70,6 @@ public class Transaction {
     @JoinColumn(name = "budget_item_id")
     private BudgetItem budgetItem;
 
-    @Column(name = "budget_item_id")
-    private Long budgetItemId;
+//    @Column(name = "budget_item_id")
+//    private Long budgetItemId;
 }

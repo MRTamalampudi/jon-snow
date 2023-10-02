@@ -19,7 +19,7 @@ public class Budget {
             name = "user_id",
             nullable = false
     )
-    private User user;
+    private User user;  
 
     @OneToMany(
             fetch = FetchType.LAZY,

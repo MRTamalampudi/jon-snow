@@ -23,4 +23,8 @@ public class Transactee {
             fetch = FetchType.LAZY
     )
     private List<Transaction> transactions;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

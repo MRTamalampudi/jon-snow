@@ -30,18 +30,12 @@ public class SplitBill {
     @JoinColumn(name = "split_bill_group_id")
     private SplitBillGroup splitBillGroup;
 
-    @Column(name = "split_bill_group_id")
-    private Long splitBillGroupId;
-
     @ManyToOne
     @JoinColumn(
             name = "paid_by",
             nullable = false
     )
     private User paidBy;
-
-    @Column(name = "paid_by")
-    private Long paidUserId;
 
     @OneToMany(
             mappedBy = "splitBill",
