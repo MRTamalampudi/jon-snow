@@ -1,11 +1,13 @@
 package com.expenses.jonsnow.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
+@Data
 public class User {
 
     @Id
@@ -78,8 +80,8 @@ public class User {
     )
     private List<SplitBillGroupMember> groupsList;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private UserPreferences userPreferences;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    private UserPreferences userPreferences;
 
     @OneToMany(
             mappedBy = "user",

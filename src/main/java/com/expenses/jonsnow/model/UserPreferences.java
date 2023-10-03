@@ -1,9 +1,11 @@
 package com.expenses.jonsnow.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "user_preferences")
+@Data
 public class UserPreferences {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,8 +18,7 @@ public class UserPreferences {
     private String currency;
 
     @OneToOne(
-            fetch = FetchType.LAZY,
-            mappedBy = "userPreferences"
+            fetch = FetchType.LAZY
     )
     @JoinColumn(
             name = "user_id",
@@ -25,6 +26,6 @@ public class UserPreferences {
     )
     private User user;
 
-    @Column(name = "user_id")
-    private Long userId;
+//    @Column(name = "user_id")
+//    private Long userId;
 }
