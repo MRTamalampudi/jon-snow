@@ -1,15 +1,20 @@
 package com.expenses.jonsnow.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "budget_items")
+@Data
 public class BudgetItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "item")
+    @Column(
+            name = "item",
+            nullable = false
+    )
     private String item;
 
     @Column(name = "amount")
@@ -21,17 +26,4 @@ public class BudgetItem {
     )
     @JoinColumn(name = "budget_id")
     private Budget budget;
-
-//    @Column(name = "budget_id")
-//    private Long budget_id;
-
-    @OneToOne(
-            targetEntity = Transaction.class,
-            fetch = FetchType.LAZY
-    )
-    @JoinColumn(name = "transaction_id")
-    private Transaction transaction;
-
-//    @Column(name = "transaction_id")
-//    private Long transactionId;
 }

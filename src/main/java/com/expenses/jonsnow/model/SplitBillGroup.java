@@ -14,8 +14,13 @@ public class SplitBillGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(
+            name = "name",
+            nullable = false
+    )
     private String name;
 
+    @Column(name = "avatar")
     private String avatar;
 
     @ManyToOne(
@@ -24,9 +29,6 @@ public class SplitBillGroup {
     )
     @JoinColumn(name = "created_by")
     private User user;
-
-//    @Column(name = "created_by")
-//    private Long createdBy;
 
     @Column(name = "date")
     private Instant date;

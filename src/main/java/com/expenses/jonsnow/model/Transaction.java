@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 import java.time.Instant;
 
 @Entity
-@Table(name = "transaction")
+@Table(name = "transactions")
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,22 +46,13 @@ public class Transaction {
     @JoinColumn(name = "split_bill_id")
     private SplitBill splitBill;
 
-//    @Column(name = "split_bill_id")
-//    private Long splitBill_id;
-
     @ManyToOne(targetEntity = Budget.class)
     @JoinColumn(name = "budget_id")
     private Budget budget;
 
-//    @Column(name = "budget_id")
-//    private Long budgetId;
-
     @ManyToOne(targetEntity = Transactee.class)
     @JoinColumn(name = "transactee_id")
     private Transactee transactee;
-
-//    @Column(name = "transactee_id")
-//    private Long transacteeId;
 
     @OneToOne(
             targetEntity = BudgetItem.class,
@@ -69,7 +60,4 @@ public class Transaction {
     )
     @JoinColumn(name = "budget_item_id")
     private BudgetItem budgetItem;
-
-//    @Column(name = "budget_item_id")
-//    private Long budgetItemId;
 }
