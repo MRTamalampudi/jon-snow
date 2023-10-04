@@ -5,6 +5,7 @@ import com.expenses.jonsnow.model.enums.SplitAlgo;
 import com.expenses.jonsnow.model.enums.TransactionType;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
@@ -19,7 +20,7 @@ public class Transaction {
 
 
     @Column(name = "amount")
-    private Float amount;
+    private BigDecimal amount;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "transaction_type")
@@ -34,7 +35,8 @@ public class Transaction {
 
     @Column(
             name = "date",
-            columnDefinition = "TIMESTAMP"
+            columnDefinition = "TIMESTAMP",
+            nullable = false
     )
     private Instant date;
 

@@ -3,6 +3,7 @@ package com.expenses.jonsnow.model;
 import com.expenses.jonsnow.model.enums.SplitAlgo;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class SplitBill {
     private String bill;
 
     @Column(name = "amount")
-    private Float amount;
+    private BigDecimal amount;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "split_algo")
@@ -27,7 +28,10 @@ public class SplitBill {
     private Instant date;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "split_bill_group_id")
+    @JoinColumn(
+            name = "split_bill_group_id",
+            nullable = false
+    )
     private SplitBillGroup splitBillGroup;
 
     @ManyToOne

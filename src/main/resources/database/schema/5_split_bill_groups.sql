@@ -6,5 +6,5 @@ CREATE TABLE IF NOT EXISTS `split_bill_groups`(
     `created_by` BIGINT NOT NULL,
 
     PRIMARY KEY(`id`),
-    FOREIGN KEY(`created_by`) REFERENCES users(`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+    FOREIGN KEY(`created_by`) REFERENCES users(`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 );
