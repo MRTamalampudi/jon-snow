@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "budget")
-public class Budget {
+public class Budget extends Audit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

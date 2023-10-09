@@ -10,6 +10,8 @@ CREATE TABLE IF NOT EXISTS `transactions`(
     `budget_id` BIGINT,
     `transactee_id` BIGINT,
     `budget_item_id` BIGINT,
+    `created_date` TIMESTAMP,
+    `last_modified_date` TIMESTAMP,
 
     PRIMARY KEY(`id`),
     FOREIGN KEY(`user_id`) REFERENCES users(`id`) ON DELETE CASCADE ON UPDATE NO ACTION,

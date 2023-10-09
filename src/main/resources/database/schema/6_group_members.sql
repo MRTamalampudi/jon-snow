@@ -4,6 +4,8 @@ CREATE TABLE IF NOT EXISTS `group_members`(
     `owe_share` DECIMAL(10,2),
     `lent_share` DECIMAL(10,2),
     `group_id` BIGINT NOT NULL,
+    `created_date` TIMESTAMP,
+    `last_modified_date` TIMESTAMP,
 
     PRIMARY KEY(`id`),
     FOREIGN KEY(`member_id`) REFERENCES users(`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
