@@ -33,11 +33,11 @@ public class User extends Audit {
     )
     private List<Transaction> transactions;
 
-    @OneToMany(
-            mappedBy = "user",
-            fetch = FetchType.LAZY
-    )
-    private List<Category> categories;
+//    @OneToMany(
+//            mappedBy = "user",
+//            fetch = FetchType.LAZY
+//    )
+//    private List<Category> categories;
 
     @OneToMany(
             mappedBy = "paidBy",

@@ -4,11 +4,16 @@ import com.expenses.jonsnow.model.User;
 import com.expenses.jonsnow.model.UserPreferences;
 import com.expenses.jonsnow.repository.UserPreferencesRepo;
 import com.expenses.jonsnow.repository.UserRepo;
+import com.expenses.jonsnow.specification.Builder.UserSpecificationBuilder;
+import com.expenses.jonsnow.specification.UserSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/demo")
@@ -38,5 +43,11 @@ public class DemoController {
 
 
         return userPreferences;
+    }
+
+    @GetMapping("/spec")
+    public List<User> spec(UserSpecificationBuilder builder){
+        Specification<User> userSpecification = builder.build();
+        return userRepo.findAll(userSpecification);
     }
 }

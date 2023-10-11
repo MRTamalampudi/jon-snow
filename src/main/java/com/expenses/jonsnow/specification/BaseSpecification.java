@@ -7,41 +7,33 @@ import java.util.Objects;
 
 public abstract class BaseSpecification<T> implements Specification<T> {
 
-
     protected SearchRequest searchRequest;
+
+    public BaseSpecification(SearchRequest searchRequest){
+        super();
+        this.searchRequest = searchRequest;
+    }
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
         return switch (searchRequest.getOperator()){
-            case EQUALITY -> cb
-                    .equal(
+            case EQUALITY -> cb.equal(
                             getPath(searchRequest,root),
-                            searchRequest.getValue()
-                    );
-            case LIKE -> cb
-                    .like(
+                            searchRequest.getValue());
+            case LIKE -> cb.like(
                             getPath(searchRequest,root),
-                            '%' + searchRequest.getValue()+'%'
-                    );
-            case GREATER_THAN -> cb
-                    .greaterThan(
+                            '%' + searchRequest.getValue()+'%');
+            case GREATER_THAN -> cb.greaterThan(
                             getPath(searchRequest,root),
-                            searchRequest.getValue()
-                    );
-            case LESS_THAN -> cb
-                    .lessThan(
+                            searchRequest.getValue());
+            case LESS_THAN -> cb.lessThan(
                             getPath(searchRequest,root),
-                            searchRequest.getValue()
-                    );
-            case GREATER_THAN_OR_EQUAL_TO -> cb
-                    .greaterThanOrEqualTo(
+                            searchRequest.getValue());
+            case GREATER_THAN_OR_EQUAL_TO -> cb.greaterThanOrEqualTo(
                             getPath(searchRequest,root),
-                            searchRequest.getValue()
-                    );
-            case LESSER_THAN_OR_EQUAL_TO -> cb
-                    .lessThanOrEqualTo(
+                            searchRequest.getValue());
+            case LESSER_THAN_OR_EQUAL_TO -> cb.lessThanOrEqualTo(
                             getPath(searchRequest,root),
-                            searchRequest.getValue()
-                    );
+                            searchRequest.getValue());
             case IN -> cb
                     .in(getPath(searchRequest,root))
                     .in(searchRequest.getValues());
