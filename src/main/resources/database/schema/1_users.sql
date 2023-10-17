@@ -6,6 +6,8 @@ create table if not exists `users` (
     `mobile` varchar(255),
     `created_date` TIMESTAMP,
     `last_modified_date` TIMESTAMP,
+    `password` char(255),
+    `username` varchar(255),
 
     primary key (`id`)
 );
