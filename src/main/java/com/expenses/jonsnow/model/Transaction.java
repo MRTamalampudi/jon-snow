@@ -10,7 +10,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "transactions")
-public class Transaction {
+public class Transaction extends AuditCreatedBy{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,13 +25,6 @@ public class Transaction {
     @Enumerated(EnumType.STRING)
     @Column(name = "transaction_type")
     private TransactionType type;
-
-    @ManyToOne(targetEntity = User.class)
-    @JoinColumn(
-            name = "user_id",
-            nullable = false
-    )
-    private User user;
 
     @Column(
             name = "date",

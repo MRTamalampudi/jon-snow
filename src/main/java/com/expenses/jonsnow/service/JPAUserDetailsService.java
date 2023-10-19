@@ -1,5 +1,6 @@
 package com.expenses.jonsnow.service;
 
+import com.expenses.jonsnow.model.SecurityUser;
 import com.expenses.jonsnow.model.User;
 import com.expenses.jonsnow.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +20,12 @@ public class JPAUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = users.findByUserName(username);
-        String name = user.map(User::getUsername).get();
+        SecurityUser securityUser = new SecurityUser(user.get());
+        String name = securityUser.getUsername();
         if(!username.equals(name)){
             throw new UsernameNotFoundException("UserNmae not founf");
         } else {
-            return user.get();
+            return securityUser;
         }
     }
 }
