@@ -4,12 +4,14 @@ import com.expenses.jonsnow.model.enums.PaymentMode;
 import com.expenses.jonsnow.model.enums.SplitAlgo;
 import com.expenses.jonsnow.model.enums.TransactionType;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
 @Table(name = "transactions")
+@Data
 public class Transaction extends AuditCreatedBy{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

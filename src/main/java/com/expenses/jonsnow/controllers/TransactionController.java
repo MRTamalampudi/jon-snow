@@ -5,12 +5,16 @@ import com.expenses.jonsnow.dto.TransactionDTO;
 import com.expenses.jonsnow.dto.request.TransactionRequest;
 import com.expenses.jonsnow.mapper.TransactionMapper;
 import com.expenses.jonsnow.model.Transaction;
+import com.expenses.jonsnow.model.enums.TransactionType;
 import com.expenses.jonsnow.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.util.Date;
 
 @RestController
 @RequestMapping(value = URLConstants.TRANSACTIONS)
@@ -24,8 +28,8 @@ public class TransactionController {
         return service.index(pageable);
     }
 
-    @PostMapping
+    @PostMapping()
     public void create(@RequestBody TransactionRequest request){
-        Transaction transaction = mapper.map(request);
+
     }
 }
