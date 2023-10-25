@@ -17,10 +17,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class TransactionService implements BaseService<Transaction>{
+public class TransactionService
+        implements CRUDService<Transaction,TransactionDTO> {
     private final TransactionRepo transactions;
     private final TransactionMapper mapper;
 
+    @Override
     public Page<TransactionDTO> index(Specification<Transaction> specification,Pageable pageable){
        Page<Transaction> transactionPage = transactions.findAll(specification,pageable);
        List<TransactionDTO> transactionDTOS = mapper.map(transactionPage.getContent());
@@ -31,12 +33,18 @@ public class TransactionService implements BaseService<Transaction>{
        );
     }
 
-    public Transaction save(Transaction transaction){
-        return transactions.save(transaction);
+    @Override
+    public Transaction findById(Long entityId) {
+        return null;
     }
 
     @Override
-    public Page<Transaction> index(BaseSpecification<Transaction> baseSpecification, Pageable pageable) {
+    public void deleteById(Long enityId) {
+
+    }
+
+    @Override
+    public Transaction create(Transaction transaction) {
         return null;
     }
 }
