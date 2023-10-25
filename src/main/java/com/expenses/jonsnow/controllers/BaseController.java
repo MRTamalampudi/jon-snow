@@ -13,7 +13,7 @@ public interface BaseController<Model,DTO,Request> {
     @GetMapping
     List<DTO> index(List<SearchRequest> requests, Pageable pageable);
 
-    @GetMapping(/"{id")
+    @GetMapping("/{id}")
     DTO get(@PathVariable("id") Long entityId);
 
     @PostMapping
