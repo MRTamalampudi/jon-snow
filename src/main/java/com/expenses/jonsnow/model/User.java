@@ -1,7 +1,11 @@
 package com.expenses.jonsnow.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -35,8 +39,11 @@ public class User extends Audit{
 
     @OneToMany(
             mappedBy = "createdBy",
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonIgnore
     private List<Transaction> transactions;
 
 //    @OneToMany(
@@ -93,5 +100,7 @@ public class User extends Audit{
             mappedBy = "user",
             fetch = FetchType.LAZY
     )
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<Transactee> transactees;
 }

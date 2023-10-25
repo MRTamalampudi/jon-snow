@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
-public abstract class BaseSpecificationBuilder{
+public abstract class BaseSpecificationBuilder<T>{
     List<SearchRequest> searchRequests;
 
     public void addSearchRequests(String key,String operatorString,String value){
@@ -27,5 +27,17 @@ public abstract class BaseSpecificationBuilder{
                 .add(searchRequest);
     }
 
-    public abstract Specification<?> build();
+    public Specification<T> build(){
+        if (searchRequests.size() == 0) {
+            return null;
+        }
+
+        Specification<T> specification = createSpecification(searchRequests.get(0));
+        for (int i = 1; i < searchRequests.size(); i++) {
+            specification = Specification.where(specification).and(createSpecification(searchRequests.get(i)));
+        }
+        return specification;
+    }
+
+    protected abstract Specification<T> createSpecification(SearchRequest searchRequest);
 }

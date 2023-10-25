@@ -2,8 +2,10 @@ package com.expenses.jonsnow.specification.Builder;
 
 import com.expenses.jonsnow.model.Transaction;
 import com.expenses.jonsnow.specification.SearchRequest;
+import com.expenses.jonsnow.specification.TransactionSpecification;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionSpecificationBuilder extends BaseSpecificationBuilder<Transaction>{
@@ -12,13 +14,10 @@ public class TransactionSpecificationBuilder extends BaseSpecificationBuilder<Tr
         super(searchRequests);
     }
 
-    @Override
-    public Specification<Transaction> build() {
-        return null;
-    }
+
 
     @Override
-    public Specification<Transaction> createSpecification(SearchRequest searchRequest) {
-        return null;
+    protected Specification<Transaction> createSpecification(SearchRequest searchRequest) {
+        return new TransactionSpecification(searchRequest);
     }
 }

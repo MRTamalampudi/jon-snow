@@ -21,6 +21,7 @@ public class WebSecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.httpBasic(Customizer.withDefaults());
         http.authorizeHttpRequests(requests-> requests.anyRequest().authenticated());
+        http.csrf(csrf -> csrf.disable());
         http.userDetailsService(userDetailsService);
         return http.build();
     }

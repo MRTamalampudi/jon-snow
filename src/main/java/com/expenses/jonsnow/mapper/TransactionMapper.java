@@ -10,5 +10,6 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface TransactionMapper {
     List<TransactionDTO> map(List<Transaction> transactions);
+    TransactionDTO map(Transaction transaction);
     Transaction map(TransactionRequest request);
 }

@@ -5,13 +5,9 @@ import com.expenses.jonsnow.model.UserPreferences;
 import com.expenses.jonsnow.repository.UserPreferencesRepo;
 import com.expenses.jonsnow.repository.UserRepo;
 import com.expenses.jonsnow.specification.Builder.UserSpecificationBuilder;
-import com.expenses.jonsnow.specification.UserSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,10 +45,9 @@ public class DemoController {
     }
 
     @GetMapping("/spec")
-    public String  spec(UserSpecificationBuilder builder){
+    public List<User> spec(UserSpecificationBuilder builder){
         Specification<User> userSpecification = builder.build();
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String name = authentication.getName();
-        return name;
+        List<User> userList = userRepo.findAll(userSpecification);
+        return userList;
     }
 }

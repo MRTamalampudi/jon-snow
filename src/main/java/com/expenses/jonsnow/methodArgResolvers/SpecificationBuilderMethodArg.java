@@ -2,13 +2,18 @@ package com.expenses.jonsnow.methodArgResolvers;
 
 import com.expenses.jonsnow.specification.Builder.BaseSpecificationBuilder;
 import com.expenses.jonsnow.specification.Operator;
+import com.expenses.jonsnow.specification.SearchRequest;
 import graphql.com.google.common.base.Joiner;
+import org.apache.catalina.LifecycleState;
 import org.springframework.core.MethodParameter;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,7 +21,15 @@ public class SpecificationBuilderMethodArg implements HandlerMethodArgumentResol
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return BaseSpecificationBuilder.class.equals(parameter.getParameterType().getSuperclass());
+        ParameterizedTypeReference<List<SearchRequest>> typeReference = new ParameterizedTypeReference<List<SearchRequest>>() {};
+        return typeReference
+                .getType()
+                .getTypeName()
+                .equals(
+                        parameter
+                                .getGenericParameterType()
+                                .getTypeName()
+                );
     }
 
     @Override
@@ -26,10 +39,7 @@ public class SpecificationBuilderMethodArg implements HandlerMethodArgumentResol
             NativeWebRequest webRequest,
             WebDataBinderFactory binderFactory
     ) throws Exception {
-        BaseSpecificationBuilder builder = (BaseSpecificationBuilder) parameter
-                .getParameterType()
-                .getDeclaredConstructor()
-                .newInstance();
+        List<SearchRequest> searchRequests = new ArrayList<>();
         String query = webRequest.getParameter("q");
         String operators = Joiner
                 .on("|")
@@ -42,11 +52,11 @@ public class SpecificationBuilderMethodArg implements HandlerMethodArgumentResol
         Matcher matcher = pattern.matcher(query+",");
         while (matcher.find()){
             String key = matcher.group(1);
-            String operator = matcher.group(2);
+            Operator operator = Operator.getOperator(matcher.group(2));
             String value = matcher.group(3);
-            builder.addSearchRequests(key,operator,value);
+            searchRequests.add(new SearchRequest(key,operator,value,null));
         }
 
-        return builder;
+        return searchRequests;
     }
 }
