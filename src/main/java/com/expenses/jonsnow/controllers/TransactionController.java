@@ -25,7 +25,7 @@ import java.util.List;
 @RequestMapping(value = URLConstants.TRANSACTIONS)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class TransactionController implements
-        BaseController<Transaction,TransactionDTO,TransactionRequest>{
+        BaseController<TransactionDTO,TransactionRequest>{
 
     private final TransactionService service;
     private final TransactionMapper mapper;

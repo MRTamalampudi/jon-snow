@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-public interface BaseController<Model,DTO,Request> {
+public interface BaseController<DTO,Request> {
     @GetMapping
     List<DTO> index(List<SearchRequest> requests, Pageable pageable);
 
