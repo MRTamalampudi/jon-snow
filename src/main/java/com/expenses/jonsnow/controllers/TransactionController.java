@@ -11,6 +11,7 @@ import com.expenses.jonsnow.specification.Builder.TransactionSpecificationBuilde
 import com.expenses.jonsnow.specification.SearchRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
@@ -30,12 +31,12 @@ public class TransactionController implements
 
 
     @Override
-    public List<TransactionDTO> index(
+    public Page<TransactionDTO> index(
             List<SearchRequest> requests,
             Pageable pageable
     ) {
         Specification<Transaction> specification = new TransactionSpecificationBuilder(requests).build();
-        return service.index(specification,pageable).getContent();
+        return service.index(specification,pageable);
     }
 
     @Override

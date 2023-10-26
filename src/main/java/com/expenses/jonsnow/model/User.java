@@ -1,7 +1,6 @@
 package com.expenses.jonsnow.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,17 +23,15 @@ public class User extends Audit{
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email")
+    @Column(
+            name = "email",
+            nullable = false,
+            unique = true
+    )
     private String email;
-
-    @Column(name = "mobile")
-    private String mobile;
 
     @Column(name = "password")
     private String password;
-
-    @Column(name = "username")
-    private String userName;
 
 
     @OneToMany(
@@ -46,11 +43,6 @@ public class User extends Audit{
     @JsonIgnore
     private List<Transaction> transactions;
 
-//    @OneToMany(
-//            mappedBy = "user",
-//            fetch = FetchType.LAZY
-//    )
-//    private List<Category> categories;
 
     @OneToMany(
             mappedBy = "paidBy",
@@ -93,8 +85,6 @@ public class User extends Audit{
     )
     private List<SplitBillGroupMember> groupsList;
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    private UserPreferences userPreferences;
 
     @OneToMany(
             mappedBy = "user",

@@ -1,6 +1,6 @@
 package com.expenses.jonsnow.model;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,7 +27,7 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.user.getUserName();
+        return this.user.getEmail();
     }
 
     @Override

@@ -19,7 +19,7 @@ public class JPAUserDetailsService implements UserDetailsService {
     private final UserRepo users;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = users.findByUserName(username);
+        Optional<User> user = users.findByEmail(username);
         SecurityUser securityUser = new SecurityUser(user.get());
         String name = securityUser.getUsername();
         if(!username.equals(name)){

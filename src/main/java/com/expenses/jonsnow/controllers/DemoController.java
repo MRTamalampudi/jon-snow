@@ -28,7 +28,6 @@ public class DemoController {
         user.setFirstName("Mahendra Singh");
         user.setLastName("DHONI");
         user.setEmail("dhoni@gmail.com");
-        user.setMobile("9373737377");
 
         user = userRepo.save(user);
 

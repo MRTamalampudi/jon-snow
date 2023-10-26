@@ -1,6 +1,7 @@
 package com.expenses.jonsnow.controllers;
 
 import com.expenses.jonsnow.specification.SearchRequest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 public interface CRUDController<DTO,Request> {
     @GetMapping
-    List<DTO> index(
+    Page<DTO> index(
             List<SearchRequest> requests,
             Pageable pageable
     );
