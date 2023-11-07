@@ -11,7 +11,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface TransactionMapper {
     List<TransactionDTO> map(List<Transaction> transactions);
-    @Mapping(target = "type" , expression = "java(transaction.getType().name())")
+
+    @Mapping(target = "type",source = "type.test")
     TransactionDTO map(Transaction transaction);
     Transaction map(TransactionRequest request);
 }

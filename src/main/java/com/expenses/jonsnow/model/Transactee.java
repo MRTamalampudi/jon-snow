@@ -1,12 +1,14 @@
 package com.expenses.jonsnow.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
 @Table(name = "transactees")
-public class Transactee {
+@Data
+public class Transactee extends AuditCreatedBy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +29,4 @@ public class Transactee {
     )
     private List<Transaction> transactions;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 }

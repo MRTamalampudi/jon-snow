@@ -26,11 +26,11 @@ public class WebSecurityConfig {
     private JPAUserDetailsService userDetailsService;
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http.httpBasic(Customizer.withDefaults());
+        http.httpBasic(Customizer.withDefaults());
         http.authorizeHttpRequests(requests-> requests.anyRequest().permitAll());
-//        http.csrf(csrf -> csrf.disable());
+        http.csrf(csrf -> csrf.disable());
         http.cors(Customizer.withDefaults());
-//        http.userDetailsService(userDetailsService);
+        http.userDetailsService(userDetailsService);
         return http.build();
     }
 

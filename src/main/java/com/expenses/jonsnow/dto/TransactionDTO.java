@@ -1,5 +1,6 @@
 package com.expenses.jonsnow.dto;
 
+import com.expenses.jonsnow.model.enums.TransactionType;
 import lombok.Data;
 
 import java.math.BigDecimal;

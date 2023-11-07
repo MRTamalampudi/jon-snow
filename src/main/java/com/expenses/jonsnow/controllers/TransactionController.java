@@ -23,7 +23,7 @@ import java.util.List;
 @RequestMapping(value = URLConstants.TRANSACTIONS)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class TransactionController implements
-        CRUDController<TransactionDTO,TransactionRequest> {
+        CRUDController<Transaction,TransactionDTO,TransactionRequest> {
 
     private final TransactionService service;
     private final TransactionMapper mapper;
@@ -46,8 +46,8 @@ public class TransactionController implements
     }
 
     @Override
-    public TransactionRequest create(TransactionRequest request) {
-        return request;
+    public TransactionDTO create(TransactionRequest request) {
+        return null;
     }
 
     @Override

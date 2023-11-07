@@ -1,6 +1,8 @@
 package com.expenses.jonsnow.controllers;
 
 import com.expenses.jonsnow.specification.SearchRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -8,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-public interface CRUDController<DTO,Request> {
+public interface CRUDController<Entity,DTO,Request> {
     @GetMapping
     Page<DTO> index(
             List<SearchRequest> requests,
@@ -19,7 +21,7 @@ public interface CRUDController<DTO,Request> {
     DTO get(@PathVariable("id") Long entityId);
 
     @PostMapping
-    Request create(@RequestBody Request request);
+    DTO create(@RequestBody Request request);
 
     @DeleteMapping("/{id}")
     void delete(@PathVariable("id") Long entityId);

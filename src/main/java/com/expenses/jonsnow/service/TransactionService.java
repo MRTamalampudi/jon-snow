@@ -3,7 +3,6 @@ package com.expenses.jonsnow.service;
 import com.expenses.jonsnow.dto.TransactionDTO;
 import com.expenses.jonsnow.model.Transaction;
 import com.expenses.jonsnow.repository.TransactionRepo;
-import com.expenses.jonsnow.specification.BaseSpecification;
 import lombok.RequiredArgsConstructor;
 import com.expenses.jonsnow.mapper.TransactionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -27,19 +27,16 @@ public class TransactionService implements CRUDService<Transaction,TransactionDT
     public Page<TransactionDTO> index(Specification<Transaction> specification,Pageable pageable){
        Page<Transaction> transactionPage = transactions.findAll(specification,pageable);
        List<TransactionDTO> transactionDTOS = mapper.map(transactionPage.getContent());
-       Page<TransactionDTO> page = new PageImpl<>(
+       return new PageImpl<>(
                transactionDTOS,
                pageable,
                transactionPage.getTotalElements()
        );
-       return page;
     }
 
     @Override
-    public Transaction findById(Long entityId) {
-        return repo
-                .findById(entityId)
-                .orElse(new Transaction());
+    public Optional<Transaction> findById(Long entityId) {
+        return repo.findById(entityId);
     }
 
     @Override

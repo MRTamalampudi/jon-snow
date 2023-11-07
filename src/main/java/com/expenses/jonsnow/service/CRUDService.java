@@ -4,8 +4,11 @@ import com.expenses.jonsnow.specification.BaseSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 
 public interface CRUDService<Entity,DTO> {
     Page<DTO> index(
@@ -13,7 +16,7 @@ public interface CRUDService<Entity,DTO> {
             Pageable pageable
     );
 
-    Entity findById(Long entityId);
+    Optional<Entity> findById(Long entityId);
 
     void deleteById(Long enityId);
 

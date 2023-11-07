@@ -87,7 +87,7 @@ public class User extends Audit{
 
 
     @OneToMany(
-            mappedBy = "user",
+            mappedBy = "createdBy",
             fetch = FetchType.LAZY
     )
     @EqualsAndHashCode.Exclude

@@ -1,6 +1,7 @@
 package com.expenses.jonsnow.model.enums;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @AllArgsConstructor
 public enum TransactionType {
@@ -9,5 +10,9 @@ public enum TransactionType {
     OWE("Owe"),
     LENT("Lent");
 
-    private final String corr;
+    private final String test;
+
+    public String getTest() {
+        return this.test;
+    }
 }
