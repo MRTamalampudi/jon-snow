@@ -51,6 +51,10 @@ public class Transaction extends AuditCreatedBy{
     @JoinColumn(name = "transactee_id")
     private Transactee transactee;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     @OneToOne(
             targetEntity = BudgetItem.class,
             fetch = FetchType.LAZY

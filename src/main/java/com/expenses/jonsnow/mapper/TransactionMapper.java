@@ -12,7 +12,11 @@ import java.util.List;
 public interface TransactionMapper {
     List<TransactionDTO> map(List<Transaction> transactions);
 
-    @Mapping(target = "type",source = "type.test")
+    @Mapping(target = "type",source = "type.type")
+    @Mapping(target = "paymentMode", source = "paymentMode.mode")
     TransactionDTO map(Transaction transaction);
+
+    @Mapping(target = "transactee.id", source = "transacteeId")
     Transaction map(TransactionRequest request);
+
 }

@@ -1,5 +1,6 @@
 package com.expenses.jonsnow.config;
 
+import com.expenses.jonsnow.security.JWTAuthenticationFilter;
 import com.expenses.jonsnow.security.UsernamePasswordFilter;
 import com.expenses.jonsnow.service.JPAUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +40,18 @@ public class WebSecurityConfig {
     }
 
     @Bean
+    public JWTAuthenticationFilter jwtAuthenticationFilter(){
+        return new JWTAuthenticationFilter(authenticationManager());
+    }
+
+    @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.httpBasic(Customizer.withDefaults());
         http.authorizeHttpRequests(requests-> requests.anyRequest().permitAll());
         http.csrf(csrf -> csrf.disable());
-        http.addFilterBefore(usernamePasswordFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticationFilter(),UsernamePasswordAuthenticationFilter.class);
         http.cors(Customizer.withDefaults());
+        http.addFilterBefore(usernamePasswordFilter(), UsernamePasswordAuthenticationFilter.class);
         http.sessionManagement(c-> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        http.userDetailsService(userDetailsService);
         return http.build();
     }
 
@@ -64,11 +69,13 @@ public class WebSecurityConfig {
                 HttpMethod.PUT.toString()
         );
         CorsConfiguration cors = new CorsConfiguration();
-        cors.addAllowedOrigin("http://localhost:3000");
-        cors.setAllowedMethods(allowedMethods);
+        cors.addAllowedOrigin("http://*.expenses.io");
+        cors.addAllowedHeader("*");
+        cors.setAllowedMethods(List.of("*"));
+        cors.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**",cors);
+        source.registerCorsConfiguration("*",cors);
 
         return source;
     }

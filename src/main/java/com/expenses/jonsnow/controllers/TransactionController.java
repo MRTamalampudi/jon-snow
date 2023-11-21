@@ -47,7 +47,8 @@ public class TransactionController implements
 
     @Override
     public TransactionDTO create(TransactionRequest request) {
-        return null;
+        Transaction transaction = mapper.map(request);
+        return mapper.map(service.create(transaction));
     }
 
     @Override

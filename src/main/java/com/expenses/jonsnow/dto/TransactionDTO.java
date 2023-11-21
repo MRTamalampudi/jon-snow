@@ -1,5 +1,6 @@
 package com.expenses.jonsnow.dto;
 
+import com.expenses.jonsnow.model.Category;
 import com.expenses.jonsnow.model.enums.TransactionType;
 import lombok.Data;
 
@@ -16,6 +17,7 @@ public class TransactionDTO {
     private String paymentMode;
     private Long splitBillId;
     private Long budgetId;
-    private Long transacteeId;
+    private TransacteeDTO transactee;
     private Long budgetItemId;
+    private Category category;
 }

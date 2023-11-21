@@ -48,6 +48,8 @@ public class User extends Audit{
             mappedBy = "paidBy",
             fetch = FetchType.LAZY
     )
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<SplitBill> splitBills;
 
     @OneToMany(
@@ -55,6 +57,8 @@ public class User extends Audit{
             targetEntity = Budget.class,
             fetch = FetchType.LAZY
     )
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<Budget> budgets;
 
 
@@ -63,6 +67,8 @@ public class User extends Audit{
             targetEntity = SplitBillShare.class,
             fetch = FetchType.LAZY
     )
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<SplitBillShare> splitBillShares;
 
     @OneToMany(
@@ -70,6 +76,8 @@ public class User extends Audit{
             targetEntity = SplitBillGroup.class,
             fetch = FetchType.LAZY
     )
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<SplitBillGroup> splitBillGroupsCreatedList;
 
     @OneToMany(
@@ -77,12 +85,16 @@ public class User extends Audit{
             targetEntity = SplitBill.class,
             fetch = FetchType.LAZY
     )
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<SplitBill> billsPaidList;
 
     @OneToMany(
             mappedBy = "member",
             fetch = FetchType.LAZY
     )
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<SplitBillGroupMember> groupsList;
 
 
