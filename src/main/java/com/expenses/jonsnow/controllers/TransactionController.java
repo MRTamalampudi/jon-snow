@@ -42,13 +42,13 @@ public class TransactionController implements
 
     @Override
     public TransactionDTO get(Long entityId) {
-        return mapper.map(repo.findById(entityId).orElse(new Transaction()));
+        return mapper.mapEntityToDTO(repo.findById(entityId).orElse(new Transaction()));
     }
 
     @Override
     public TransactionDTO create(TransactionRequest request) {
         Transaction transaction = mapper.map(request);
-        return mapper.map(service.create(transaction));
+        return mapper.mapEntityToDTO(service.create(transaction));
     }
 
     @Override

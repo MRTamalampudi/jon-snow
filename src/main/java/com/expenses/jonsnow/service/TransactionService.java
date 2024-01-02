@@ -1,7 +1,9 @@
 package com.expenses.jonsnow.service;
 
 import com.expenses.jonsnow.dto.TransactionDTO;
+import com.expenses.jonsnow.dto.request.TransactionRequest;
 import com.expenses.jonsnow.model.Transaction;
+import com.expenses.jonsnow.repository.BaseRepo;
 import com.expenses.jonsnow.repository.TransactionRepo;
 import lombok.RequiredArgsConstructor;
 import com.expenses.jonsnow.mapper.TransactionMapper;
@@ -16,41 +18,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class TransactionService implements CRUDService<Transaction,TransactionDTO> {
+public class TransactionService extends BaseService<Transaction,TransactionDTO, TransactionRequest>{
 
-    private final TransactionRepo transactions;
-    private final TransactionMapper mapper;
-    private final TransactionRepo repo;
-
-    @Override
-    public Page<TransactionDTO> index(Specification<Transaction> specification,Pageable pageable){
-       Page<Transaction> transactionPage = transactions.findAll(specification,pageable);
-       List<TransactionDTO> transactionDTOS = mapper.map(transactionPage.getContent());
-       return new PageImpl<>(
-               transactionDTOS,
-               pageable,
-               transactionPage.getTotalElements()
-       );
-    }
-
-    @Override
-    public Optional<Transaction> findById(Long entityId) {
-        return repo.findById(entityId);
-    }
-
-    @Override
-    public void deleteById(Long enityId) {
-        repo.deleteById(enityId);
-    }
-
-    @Override
-    public Transaction create(Transaction transaction) {
-        return repo.save(transaction);
-    }
-
-    @Override
-    public List<Transaction> findAll(Specification<Transaction> specification) {
-        return repo.findAll(specification);
+    public TransactionService(TransactionRepo repo, TransactionMapper mapper) {
+        super(repo,mapper);
     }
 }

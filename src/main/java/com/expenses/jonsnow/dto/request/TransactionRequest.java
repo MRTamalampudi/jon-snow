@@ -1,5 +1,7 @@
 package com.expenses.jonsnow.dto.request;
 
+import com.expenses.jonsnow.model.Category;
+import com.expenses.jonsnow.model.Transactee;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -13,5 +15,6 @@ public class TransactionRequest {
     private String type;
     private Instant date;
     private String paymentMode;
-    private Long transacteeId;
+    private TransacteeRequest transactee;
+    private Category category;
 }

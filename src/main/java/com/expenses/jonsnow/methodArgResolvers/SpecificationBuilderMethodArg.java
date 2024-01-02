@@ -13,6 +13,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,14 +48,19 @@ public class SpecificationBuilderMethodArg implements HandlerMethodArgumentResol
         Pattern pattern = Pattern.compile(
                         "(\\w+?)" +
                         "("+operators+")" +
-                        "([a-zA-Z_0-9\\#\\.\\-\\&\\\\^\\(\\)\\%\\\\$\\s\\p{L}]+)" +
-                        ",");
-        Matcher matcher = pattern.matcher(query+",");
+                        "([a-zA-Z_0-9\\,\\.\\-\\&\\\\^\\(\\)\\%\\\\$\\s\\p{L}]+)" +
+                        ";");
+        Matcher matcher = pattern.matcher(query+";");
         while (matcher.find()){
             String key = matcher.group(1);
             Operator operator = Operator.getOperator(matcher.group(2));
             String value = matcher.group(3);
-            searchRequests.add(new SearchRequest(key,operator,value,null));
+            if(Operator.IN.equals(operator)){
+                List<String> values = Arrays.stream(value.split(",")).toList();
+                searchRequests.add(new SearchRequest(key,operator,null,values));
+            } else {
+                searchRequests.add(new SearchRequest(key,operator,value,null));
+            }
         }
 
         return searchRequests;

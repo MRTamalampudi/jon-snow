@@ -34,9 +34,11 @@ public abstract class BaseSpecification<T> implements Specification<T> {
             case LESSER_THAN_OR_EQUAL_TO -> cb.lessThanOrEqualTo(
                             getPath(searchRequest,root),
                             searchRequest.getValue());
-            case IN -> cb
-                    .in(getPath(searchRequest,root))
-                    .in(searchRequest.getValues());
+            case IN -> {
+                CriteriaBuilder.In<String> cbb = cb.in(getPath(searchRequest,root));
+                searchRequest.getValues().forEach(cbb::value);
+                yield cbb;
+            }
         };
     }
 
