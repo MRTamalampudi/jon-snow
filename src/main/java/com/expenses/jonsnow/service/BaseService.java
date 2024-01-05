@@ -14,8 +14,8 @@ import java.util.Optional;
 
 public abstract class BaseService<Entity,DTO,Request> {
 
-    private BaseRepo<Entity,Long> repo;
-    private BaseMapper<Entity,DTO,Request> mapper;
+    private final BaseRepo<Entity,Long> repo;
+    private final BaseMapper<Entity,DTO,Request> mapper;
     public BaseService(BaseRepo<Entity,Long> repo, BaseMapper<Entity,DTO,Request> mapper) {
         this.repo = repo;
         this.mapper = mapper;
@@ -54,7 +54,7 @@ public abstract class BaseService<Entity,DTO,Request> {
         repo.delete(entity);
     }
 
-    public void delete(List<Entity> entities){
-        repo.deleteAll(entities);
+    public void deleteAllById(List<Long> entityIds){
+        repo.deleteAllById(entityIds);
     }
 }

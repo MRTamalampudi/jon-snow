@@ -14,7 +14,7 @@ public enum PaymentMode {
     CREDIT_CARD("Credit Card"),
     OTHER("Other");
 
-    private String mode;
+    private final String mode;
 
     public String getMode() {
         return mode;
@@ -26,6 +26,6 @@ public enum PaymentMode {
                 return mode;
             }
         }
-        return null; // Or throw an IllegalArgumentException
+        return null;
     }
 }

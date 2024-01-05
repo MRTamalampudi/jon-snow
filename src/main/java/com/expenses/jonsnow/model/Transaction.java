@@ -47,7 +47,9 @@ public class Transaction extends AuditCreatedBy{
     @JoinColumn(name = "budget_id")
     private Budget budget;
 
-    @ManyToOne(targetEntity = Transactee.class)
+    @ManyToOne(
+            targetEntity = Transactee.class
+    )
     @JoinColumn(name = "transactee_id")
     private Transactee transactee;
 
@@ -61,4 +63,6 @@ public class Transaction extends AuditCreatedBy{
     )
     @JoinColumn(name = "budget_item_id")
     private BudgetItem budgetItem;
+
+
 }

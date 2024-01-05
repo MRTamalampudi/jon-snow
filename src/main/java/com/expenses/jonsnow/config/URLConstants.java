@@ -11,4 +11,6 @@ public class URLConstants {
     public static final String TRANSACTIONS = "/transactions";
     public static final String TRANSACTEE = "/transactee";
     public static final String CATEGORY = "/category";
+
+    public static final String TRANSACTION_SUMMARY = "/transaction_summary";
 }

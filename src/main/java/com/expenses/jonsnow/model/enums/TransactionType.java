@@ -13,6 +13,17 @@ public enum TransactionType {
     OWE("Owe"),
     LENT("Lent");
 
-    private String type;
+    private final String type;
+
+    public static TransactionType fromString(String text) {
+        for (TransactionType type : TransactionType.values()) {
+            if (type.type.equalsIgnoreCase(text)) {
+                return type;
+            }
+        }
+        return null;
+    }
+
+
 
 }

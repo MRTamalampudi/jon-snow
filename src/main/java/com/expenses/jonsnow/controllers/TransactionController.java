@@ -17,13 +17,16 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
 @RestController
 @RequestMapping(value = URLConstants.TRANSACTIONS)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class TransactionController implements
-        CRUDController<Transaction,TransactionDTO,TransactionRequest> {
+public class TransactionController {
 
     private final TransactionService service;
     private final TransactionMapper mapper;
@@ -31,7 +34,7 @@ public class TransactionController implements
 
 
 
-    @Override
+    @GetMapping
     public Page<TransactionDTO> index(
             List<SearchRequest> requests,
             Pageable pageable
@@ -40,19 +43,26 @@ public class TransactionController implements
         return service.index(specification,pageable);
     }
 
-    @Override
-    public TransactionDTO get(Long entityId) {
+    @GetMapping("/{id}")
+    public TransactionDTO get(@PathVariable("id") Long entityId) {
         return mapper.mapEntityToDTO(repo.findById(entityId).orElse(new Transaction()));
     }
 
-    @Override
-    public TransactionDTO create(TransactionRequest request) {
+    @PostMapping
+    public TransactionDTO create(@RequestBody TransactionRequest request) {
         Transaction transaction = mapper.map(request);
         return mapper.mapEntityToDTO(service.create(transaction));
     }
 
-    @Override
-    public void delete(Long transactionId) {
-        repo.deleteById(transactionId);
+    @DeleteMapping
+    public void delete(List<SearchRequest> requests) {
+        List<Long> entityIds = requests.stream()
+                .filter(searchRequest -> "id".equals(searchRequest.getKey()))
+                .findFirst()
+                .map(searchRequest -> searchRequest.getValues().stream()
+                        .map(Long::parseLong)
+                        .collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
+        service.deleteAllById(entityIds);
     }
 }
