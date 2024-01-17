@@ -1,6 +1,7 @@
 package com.expenses.jonsnow.service;
 
 import com.expenses.jonsnow.dto.TransactionDTO;
+import com.expenses.jonsnow.exceptions.NoSuchEntityException;
 import com.expenses.jonsnow.mapper.BaseMapper;
 import com.expenses.jonsnow.model.Transaction;
 import com.expenses.jonsnow.repository.BaseRepo;
@@ -31,8 +32,8 @@ public abstract class BaseService<Entity,DTO,Request> {
         );
     }
 
-    public Optional<Entity> findById(Long entityId) {
-        return repo.findById(entityId);
+    public Optional<Entity> findById(Long entityId) throws NoSuchEntityException {
+        return (Optional<Entity>) repo.findById(entityId).orElseThrow(NoSuchEntityException::new);
     }
 
 
@@ -56,5 +57,9 @@ public abstract class BaseService<Entity,DTO,Request> {
 
     public void deleteAllById(List<Long> entityIds){
         repo.deleteAllById(entityIds);
+    }
+
+    public Entity update(Entity entity){
+        return repo.save(entity);
     }
 }

@@ -1,7 +1,6 @@
 package com.expenses.jonsnow.model;
 
 import com.expenses.jonsnow.model.enums.PaymentMode;
-import com.expenses.jonsnow.model.enums.SplitAlgo;
 import com.expenses.jonsnow.model.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -12,7 +11,7 @@ import java.time.Instant;
 @Entity
 @Table(name = "transactions")
 @Data
-public class Transaction extends AuditCreatedBy{
+public class Transaction extends AuditUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

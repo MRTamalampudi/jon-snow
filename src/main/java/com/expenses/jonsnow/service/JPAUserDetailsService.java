@@ -23,7 +23,7 @@ public class JPAUserDetailsService implements UserDetailsService {
         SecurityUser securityUser = new SecurityUser(user.get());
         String name = securityUser.getUsername();
         if(!username.equals(name)){
-            throw new UsernameNotFoundException("UserNmae not founf");
+            throw new UsernameNotFoundException("UserName not found");
         } else {
             return securityUser;
         }

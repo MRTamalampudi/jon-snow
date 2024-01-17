@@ -3,7 +3,9 @@ package com.expenses.jonsnow.controllers;
 import com.expenses.jonsnow.config.URLConstants;
 import com.expenses.jonsnow.dto.TransactionDTO;
 import com.expenses.jonsnow.dto.request.TransactionRequest;
+import com.expenses.jonsnow.exceptions.NoSuchEntityException;
 import com.expenses.jonsnow.mapper.TransactionMapper;
+import com.expenses.jonsnow.model.AuditorAwareImpl;
 import com.expenses.jonsnow.model.Transaction;
 import com.expenses.jonsnow.repository.TransactionRepo;
 import com.expenses.jonsnow.service.TransactionService;
@@ -44,8 +46,8 @@ public class TransactionController {
     }
 
     @GetMapping("/{id}")
-    public TransactionDTO get(@PathVariable("id") Long entityId) {
-        return mapper.mapEntityToDTO(repo.findById(entityId).orElse(new Transaction()));
+    public TransactionDTO get(@PathVariable("id") Long entityId) throws NoSuchEntityException {
+        return mapper.mapEntityToDTO(service.findById(entityId).get());
     }
 
     @PostMapping

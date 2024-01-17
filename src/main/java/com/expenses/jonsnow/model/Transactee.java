@@ -8,7 +8,7 @@ import java.util.List;
 @Entity
 @Table(name = "transactees")
 @Data
-public class Transactee extends AuditCreatedBy {
+public class Transactee extends AuditUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

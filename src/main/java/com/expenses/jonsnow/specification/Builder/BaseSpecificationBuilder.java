@@ -12,21 +12,6 @@ import java.util.List;
 public abstract class BaseSpecificationBuilder<T>{
     List<SearchRequest> searchRequests;
 
-    public void addSearchRequests(String key,String operatorString,String value){
-        Operator operator= Operator.getOperator(operatorString);
-        List<String> values = Operator.IN.equals(operator) ?
-                List.of(value.split("#")) :
-                new ArrayList<>();
-        SearchRequest searchRequest = new SearchRequest(
-                key,
-                operator,
-                values.size() > 0 ? null : value,
-                values
-        );
-        this.searchRequests
-                .add(searchRequest);
-    }
-
     public Specification<T> build(){
         if (searchRequests.size() == 0) {
             return null;

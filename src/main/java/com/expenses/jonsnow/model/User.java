@@ -35,7 +35,7 @@ public class User extends Audit{
 
 
     @OneToMany(
-            mappedBy = "createdBy",
+            mappedBy = "user",
             fetch = FetchType.EAGER
     )
     @EqualsAndHashCode.Exclude
@@ -99,7 +99,7 @@ public class User extends Audit{
 
 
     @OneToMany(
-            mappedBy = "createdBy",
+            mappedBy = "user",
             fetch = FetchType.LAZY
     )
     @EqualsAndHashCode.Exclude
