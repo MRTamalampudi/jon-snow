@@ -32,8 +32,8 @@ public abstract class BaseService<Entity,DTO,Request> {
         );
     }
 
-    public Optional<Entity> findById(Long entityId) throws NoSuchEntityException {
-        return (Optional<Entity>) repo.findById(entityId).orElseThrow(NoSuchEntityException::new);
+    public Entity findById(Long entityId) throws NoSuchEntityException {
+        return repo.findById(entityId).orElseThrow(NoSuchEntityException::new);
     }
 
 

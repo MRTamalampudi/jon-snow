@@ -21,5 +21,4 @@ public interface TransactionMapper extends BaseMapper<Transaction, TransactionDT
     @Mapping(target = "type", expression = "java(TransactionType.fromString(request.getType()))" )
     Transaction map(TransactionRequest request);
 
-
 }

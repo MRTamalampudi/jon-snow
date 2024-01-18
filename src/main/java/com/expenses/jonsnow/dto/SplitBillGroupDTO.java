@@ -9,5 +9,5 @@ import java.util.List;
 public class SplitBillGroupDTO {
     private Long id;
     private String name;
-    private List<SplitBillGroupMember> memberList;
+    private List<SplitBillGroupMemberDTO> memberList;
 }

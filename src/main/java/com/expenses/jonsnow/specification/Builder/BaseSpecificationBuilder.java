@@ -15,11 +15,11 @@ import static org.springframework.data.jpa.domain.Specification.where;
 public abstract class BaseSpecificationBuilder<T>{
     List<SearchRequest> searchRequests;
 
-    public Specification<T> build(){
-        if (searchRequests.size() == 0) {
-            return null;
-        }
+    public void setSearchRequests(List<SearchRequest> searchRequests){
+        this.searchRequests = searchRequests;
+    }
 
+    public Specification<T> build(){
         return searchRequests.stream()
                 .map(this::createSpecification)
                 .filter(Objects::nonNull)

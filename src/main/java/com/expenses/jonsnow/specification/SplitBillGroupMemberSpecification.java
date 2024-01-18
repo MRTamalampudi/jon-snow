@@ -1,10 +1,28 @@
 package com.expenses.jonsnow.specification;
 
 import com.expenses.jonsnow.model.SplitBillGroupMember;
+import jakarta.persistence.criteria.*;
 
 public class SplitBillGroupMemberSpecification extends BaseSpecification<SplitBillGroupMember> {
     public SplitBillGroupMemberSpecification(SearchRequest searchRequest) {
         super(searchRequest);
+    }
+
+
+    @Override
+    public Predicate toPredicate(Root<SplitBillGroupMember> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+        return switch (searchRequest.getKey()){
+            case "member" -> cb.equal(getPath(searchRequest,root),searchRequest.getValue());
+            default -> super.toPredicate(root, query, cb);
+        };
+    }
+
+    @Override
+    protected Path<String> getPath(SearchRequest searchRequest, Root<SplitBillGroupMember> root) {
+        return switch (searchRequest.getKey()){
+            case "member" -> root.join("member").get("id");
+            default -> super.getPath(searchRequest, root);
+        };
     }
 
     @Override

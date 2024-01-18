@@ -47,7 +47,7 @@ public class TransactionController {
 
     @GetMapping("/{id}")
     public TransactionDTO get(@PathVariable("id") Long entityId) throws NoSuchEntityException {
-        return mapper.mapEntityToDTO(service.findById(entityId).get());
+        return mapper.mapEntityToDTO(service.findById(entityId));
     }
 
     @PostMapping
