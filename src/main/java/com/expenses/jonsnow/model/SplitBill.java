@@ -2,6 +2,7 @@ package com.expenses.jonsnow.model;
 
 import com.expenses.jonsnow.model.enums.SplitAlgo;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "split_bills")
+@Data
 public class SplitBill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

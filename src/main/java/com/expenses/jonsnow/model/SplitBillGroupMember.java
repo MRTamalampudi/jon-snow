@@ -3,6 +3,8 @@ package com.expenses.jonsnow.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Entity
 @Data
 @Table(name = "group_members")
@@ -27,8 +29,8 @@ public class SplitBillGroupMember {
     private SplitBillGroup group;
 
     @Column(name = "owe_share")
-    private Long oweShare;
+    private BigDecimal oweShare;
 
     @Column(name = "lent_share")
-    private Long lentShare;
+    private BigDecimal lentShare;
 }

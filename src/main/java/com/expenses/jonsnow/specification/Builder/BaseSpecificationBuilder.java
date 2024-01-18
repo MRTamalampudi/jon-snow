@@ -7,6 +7,9 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static org.springframework.data.jpa.domain.Specification.where;
 
 @AllArgsConstructor
 public abstract class BaseSpecificationBuilder<T>{
@@ -17,11 +20,10 @@ public abstract class BaseSpecificationBuilder<T>{
             return null;
         }
 
-        Specification<T> specification = createSpecification(searchRequests.get(0));
-        for (int i = 1; i < searchRequests.size(); i++) {
-            specification = Specification.where(specification).and(createSpecification(searchRequests.get(i)));
-        }
-        return specification;
+        return searchRequests.stream()
+                .map(this::createSpecification)
+                .filter(Objects::nonNull)
+                .reduce(where(null), Specification::and);
     }
 
     protected abstract Specification<T> createSpecification(SearchRequest searchRequest);

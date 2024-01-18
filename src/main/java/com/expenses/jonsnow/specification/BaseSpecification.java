@@ -15,6 +15,10 @@ public abstract class BaseSpecification<T> implements Specification<T> {
     }
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+
+        if ("user".equals(searchRequest.getKey()))
+            return cb.equal(getPath(searchRequest,root),searchRequest.getValue());
+
         return switch (searchRequest.getOperator()){
             case EQUALITY -> cb.equal(
                             getPath(searchRequest,root),
@@ -43,7 +47,14 @@ public abstract class BaseSpecification<T> implements Specification<T> {
     }
 
     protected Path<String> getPath(SearchRequest searchRequest, Root<T> root){
-        return root.get(searchRequest.getKey());
+        switch (searchRequest.getKey()){
+            case "user": {
+                return root.join("user").get("id");
+            }
+            default:{
+                return root.get(searchRequest.getKey());
+            }
+        }
     }
 
     protected abstract Object stringToEnum(String value);

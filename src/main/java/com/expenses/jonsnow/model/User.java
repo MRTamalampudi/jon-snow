@@ -72,7 +72,7 @@ public class User extends Audit{
     private List<SplitBillShare> splitBillShares;
 
     @OneToMany(
-            mappedBy = "user",
+            mappedBy = "createdBy",
             targetEntity = SplitBillGroup.class,
             fetch = FetchType.LAZY
     )
