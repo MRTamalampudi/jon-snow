@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = URLConstants.SPLIT_BILL_GROUPS)
 public class SplitBillGroupsController extends BaseController<SplitBillGroup, SplitBillGroupDTO,SplitBillGroupDTO>{
-    
+
     public SplitBillGroupsController(BaseService<SplitBillGroup, SplitBillGroupDTO, SplitBillGroupDTO> service, BaseMapper<SplitBillGroup, SplitBillGroupDTO, SplitBillGroupDTO> mapper) {
         super(service, mapper);
         this.specificationBuilder = new SplitBillGroupSpecificationBuilder(null);

@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Entity
 @Data
 @Table(name = "group_members")
-public class SplitBillGroupMember {
+public class SplitBillGroupMember extends Audit {
 
     @Id
     @GeneratedValue

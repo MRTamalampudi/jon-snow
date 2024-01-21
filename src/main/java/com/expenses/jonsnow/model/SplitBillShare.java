@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "split_bill_shares")
 @Data
-public class SplitBillShare {
+public class SplitBillShare extends Audit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
