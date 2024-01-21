@@ -8,11 +8,6 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface TransacteeMapper {
-    List<TransacteeDTO> map(List<Transactee> transactees);
-
-    Transactee map(TransacteeRequest transacteeRequest);
-
-    TransacteeDTO map(Transactee transactee);
+public interface TransacteeMapper extends BaseMapper<Transactee,TransacteeDTO,TransacteeRequest> {
 
 }

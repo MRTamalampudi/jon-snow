@@ -4,12 +4,16 @@ import com.expenses.jonsnow.config.URLConstants;
 import com.expenses.jonsnow.dto.TransactionDTO;
 import com.expenses.jonsnow.dto.request.TransactionRequest;
 import com.expenses.jonsnow.exceptions.NoSuchEntityException;
+import com.expenses.jonsnow.mapper.BaseMapper;
 import com.expenses.jonsnow.mapper.TransactionMapper;
 import com.expenses.jonsnow.model.AuditorAwareImpl;
 import com.expenses.jonsnow.model.Transaction;
 import com.expenses.jonsnow.repository.TransactionRepo;
+import com.expenses.jonsnow.service.BaseService;
 import com.expenses.jonsnow.service.TransactionService;
+import com.expenses.jonsnow.specification.Builder.BaseSpecificationBuilder;
 import com.expenses.jonsnow.specification.Builder.TransactionSpecificationBuilder;
+import com.expenses.jonsnow.specification.Operator;
 import com.expenses.jonsnow.specification.SearchRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +31,20 @@ import java.util.stream.LongStream;
 
 @RestController
 @RequestMapping(value = URLConstants.TRANSACTIONS)
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class TransactionController {
+public class TransactionController extends BaseController<Transaction,TransactionDTO,TransactionRequest> {
 
     private final TransactionService service;
     private final TransactionMapper mapper;
     private final TransactionRepo repo;
+    private final static TransactionSpecificationBuilder builder =
+            new TransactionSpecificationBuilder(null);
+
+    public TransactionController(TransactionService service, TransactionMapper mapper,TransactionRepo repo) {
+        super(service, mapper, builder);
+        this.service = service;
+        this.mapper = mapper;
+        this.repo = repo;
+    }
 
 
 
@@ -41,8 +53,14 @@ public class TransactionController {
             List<SearchRequest> requests,
             Pageable pageable
     ) {
-        Specification<Transaction> specification = new TransactionSpecificationBuilder(requests).build();
-        return service.index(specification,pageable);
+        SearchRequest searchRequest = new SearchRequest(
+                "user",
+                Operator.EQUALITY,
+                new AuditorAwareImpl().getCurrentAuditor().get().getId().toString(),
+                null
+        );
+        requests.add(searchRequest);
+        return super.index(requests,pageable);
     }
 
     @GetMapping("/{id}")

@@ -10,6 +10,7 @@ import com.expenses.jonsnow.service.BaseService;
 import com.expenses.jonsnow.specification.Builder.SplitBillGroupSpecificationBuilder;
 import com.expenses.jonsnow.specification.Operator;
 import com.expenses.jonsnow.specification.SearchRequest;
+import com.expenses.jonsnow.specification.SplitBillGroupSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,8 +24,9 @@ import java.util.List;
 @RequestMapping(value = URLConstants.SPLIT_BILL_GROUPS)
 public class SplitBillGroupsController extends BaseController<SplitBillGroup, SplitBillGroupDTO,SplitBillGroupDTO>{
 
+    private final static SplitBillGroupSpecificationBuilder builder =
+            new SplitBillGroupSpecificationBuilder(null);
     public SplitBillGroupsController(BaseService<SplitBillGroup, SplitBillGroupDTO, SplitBillGroupDTO> service, BaseMapper<SplitBillGroup, SplitBillGroupDTO, SplitBillGroupDTO> mapper) {
-        super(service, mapper);
-        this.specificationBuilder = new SplitBillGroupSpecificationBuilder(null);
+        super(service, mapper, builder);
     }
 }

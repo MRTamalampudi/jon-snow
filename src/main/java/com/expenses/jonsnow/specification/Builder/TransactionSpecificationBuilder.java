@@ -15,13 +15,6 @@ public class TransactionSpecificationBuilder extends BaseSpecificationBuilder<Tr
 
     public TransactionSpecificationBuilder(List<SearchRequest> searchRequests) {
         super(searchRequests);
-        SearchRequest searchRequest = new SearchRequest(
-                "user",
-                Operator.EQUALITY,
-                new AuditorAwareImpl().getCurrentAuditor().get().getId().toString(),
-                null
-        );
-        this.searchRequests.add(searchRequest);
     }
 
 

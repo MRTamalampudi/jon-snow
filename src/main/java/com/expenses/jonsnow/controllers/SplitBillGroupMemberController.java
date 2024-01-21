@@ -28,9 +28,11 @@ import java.util.List;
 @Log4j2
 public class SplitBillGroupMemberController extends BaseController<SplitBillGroupMember, SplitBillGroupMemberDTO,SplitBillGroupMemberDTO>{
 
+    private static final SplitBillGroupMemberSpecificationBuilder builder =
+            new SplitBillGroupMemberSpecificationBuilder(null);
+
     public SplitBillGroupMemberController(SplitBillGroupMemberService service, SplitBillGroupMembersMapper mapper) {
-        super(service, mapper);
-        this.specificationBuilder = new SplitBillGroupMemberSpecificationBuilder(null);
+        super(service, mapper, builder);
     }
 
     @Override
@@ -43,9 +45,6 @@ public class SplitBillGroupMemberController extends BaseController<SplitBillGrou
                         null
                 )
         );
-        log.info("working");
-        log.warn("worrr");
-        log.error("errr");
         return super.index(requests, pageable);
     }
 }

@@ -1,8 +1,11 @@
 package com.expenses.jonsnow.model.enums;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
 
 @AllArgsConstructor
+@Getter
 public enum SplitBillStatus {
 
     PAID(

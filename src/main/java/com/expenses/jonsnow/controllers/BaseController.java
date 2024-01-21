@@ -17,14 +17,16 @@ public abstract class BaseController<Entity,DTO,Request> {
     private final BaseService<Entity,DTO,Request> service;
     private final BaseMapper<Entity,DTO,Request> mapper;
 
-    public BaseSpecificationBuilder<Entity> specificationBuilder;
+    private final BaseSpecificationBuilder<Entity> specificationBuilder;
 
     public BaseController(
             BaseService<Entity, DTO, Request> service,
-            BaseMapper<Entity, DTO, Request> mapper
+            BaseMapper<Entity, DTO, Request> mapper,
+            BaseSpecificationBuilder<Entity> specificationBuilder
     ) {
         this.service = service;
         this.mapper = mapper;
+        this.specificationBuilder = specificationBuilder;
     }
 
     @GetMapping
