@@ -10,5 +10,5 @@ public class SplitBillGroupMemberDTO {
     private BigDecimal oweShare;
     private BigDecimal lentShare;
     private SplitBillGroupDTO group;
-    private UserDTO user;
+    private UserDTO member;
 }

@@ -1,5 +1,6 @@
 package com.expenses.jonsnow.controllers;
 
+import com.expenses.jonsnow.exceptions.NoSuchEntityException;
 import com.expenses.jonsnow.mapper.BaseMapper;
 import com.expenses.jonsnow.service.BaseService;
 import com.expenses.jonsnow.specification.BaseSpecification;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.AbstractController;
 
 import java.util.List;
@@ -38,5 +40,10 @@ public abstract class BaseController<Entity,DTO,Request> {
         this.specificationBuilder.setSearchRequests(requests);
         Specification<Entity> specification = this.specificationBuilder.build();
         return this.service.index(specification,pageable);
+    }
+
+    @GetMapping("/{entityId}")
+    public DTO get(@PathVariable("entityId") Long entityId) throws NoSuchEntityException {
+        return mapper.mapEntityToDTO(service.findById(entityId));
     }
 }

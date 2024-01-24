@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "split_bills")
 @Data
-public class SplitBill {
+public class SplitBill extends AuditCreatedBy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

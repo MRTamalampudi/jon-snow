@@ -14,4 +14,5 @@ public class URLConstants {
     public static final String TRANSACTION_SUMMARY = "/transaction_summary";
     public static final String SPLIT_BILL_GROUPS = "groups";
     public static final String SPLIT_BILL_GROUP_MEMEBERS = "group_members";
+    public static final String SPLIT_BILL = "split_bill";
 }
