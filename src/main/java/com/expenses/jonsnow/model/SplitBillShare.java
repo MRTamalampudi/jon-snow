@@ -23,6 +23,7 @@ public class SplitBillShare extends Audit {
     private BigDecimal amount = BigDecimal.ZERO;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private SplitBillStatus status;
 
     @ManyToOne(
