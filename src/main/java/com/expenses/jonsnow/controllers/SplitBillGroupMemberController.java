@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = URLConstants.SPLIT_BILL_GROUP_MEMEBERS)
@@ -37,14 +38,18 @@ public class SplitBillGroupMemberController extends BaseController<SplitBillGrou
 
     @Override
     public Page<SplitBillGroupMemberDTO> index(List<SearchRequest> requests, Pageable pageable) {
-        requests.add(
-                new SearchRequest(
-                        "member",
-                        Operator.EQUALITY,
-                        new AuditorAwareImpl().getCurrentAuditor().get().getId().toString(),
-                        null
-                )
-        );
+        Optional<SearchRequest> forGroupsList = requests.stream().filter(request -> "forGroupsList".equals(request.getKey())).findFirst();
+        if(forGroupsList.isPresent()){
+            requests.add(
+                    new SearchRequest(
+                            "member",
+                            Operator.EQUALITY,
+                            new AuditorAwareImpl().getCurrentAuditor().get().getId().toString(),
+                            null
+                    )
+            );
+            requests.remove(forGroupsList.get());
+        }
         return super.index(requests, pageable);
     }
 }
