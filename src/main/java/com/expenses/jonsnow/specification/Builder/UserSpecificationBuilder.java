@@ -6,11 +6,12 @@ import com.expenses.jonsnow.specification.UserSpecification;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserSpecificationBuilder extends BaseSpecificationBuilder<User>{
 
-    public UserSpecificationBuilder(){
-        super(new ArrayList<>());
+    public UserSpecificationBuilder(List<SearchRequest> requests){
+        super(requests);
     }
 
     @Override

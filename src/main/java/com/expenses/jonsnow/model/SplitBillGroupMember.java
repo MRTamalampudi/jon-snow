@@ -1,7 +1,10 @@
 package com.expenses.jonsnow.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 
@@ -29,8 +32,8 @@ public class SplitBillGroupMember extends Audit {
     private SplitBillGroup group;
 
     @Column(name = "owe_share")
-    private BigDecimal oweShare;
+    private BigDecimal oweShare = new BigDecimal(0);
 
     @Column(name = "lent_share")
-    private BigDecimal lentShare;
+    private BigDecimal lentShare = new BigDecimal(0);
 }
