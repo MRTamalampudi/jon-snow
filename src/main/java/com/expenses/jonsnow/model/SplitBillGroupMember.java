@@ -1,20 +1,21 @@
 package com.expenses.jonsnow.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @Table(name = "group_members")
+@AllArgsConstructor
+@NoArgsConstructor
 public class SplitBillGroupMember extends Audit {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -24,11 +25,14 @@ public class SplitBillGroupMember extends Audit {
     )
     private User member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(
+            fetch = FetchType.LAZY
+    )
     @JoinColumn(
             name = "group_id",
             nullable = false
     )
+    @JsonBackReference
     private SplitBillGroup group;
 
     @Column(name = "owe_share")

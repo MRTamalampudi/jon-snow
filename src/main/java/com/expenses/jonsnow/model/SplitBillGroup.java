@@ -1,5 +1,6 @@
 package com.expenses.jonsnow.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,7 +23,8 @@ public class SplitBillGroup extends AuditCreatedBy {
 
     @OneToMany(
             mappedBy = "group",
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
     )
     private List<SplitBillGroupMember> memberList;
 }

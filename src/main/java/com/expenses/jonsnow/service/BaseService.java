@@ -1,9 +1,7 @@
 package com.expenses.jonsnow.service;
 
-import com.expenses.jonsnow.dto.TransactionDTO;
 import com.expenses.jonsnow.exceptions.NoSuchEntityException;
 import com.expenses.jonsnow.mapper.BaseMapper;
-import com.expenses.jonsnow.model.Transaction;
 import com.expenses.jonsnow.repository.BaseRepo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -11,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
-import java.util.Optional;
 
 public abstract class BaseService<Entity,DTO,Request> {
 

@@ -5,6 +5,5 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@Transactional
 public interface SplitBillGroupMemberRepo extends BaseRepo<SplitBillGroupMember,Long> {
 }

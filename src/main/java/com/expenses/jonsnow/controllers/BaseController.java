@@ -50,7 +50,7 @@ public abstract class BaseController<Entity,DTO,Request> {
     }
 
     @PostMapping
-    public DTO create(@RequestBody Request request){
+    public DTO create(@RequestBody Request request) throws NoSuchEntityException {
         return mapper.mapEntityToDTO(
                 service.create(
                         mapper.mapRequestToEntity(request)
