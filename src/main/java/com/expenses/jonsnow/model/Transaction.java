@@ -5,7 +5,6 @@ import com.expenses.jonsnow.model.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
@@ -21,7 +20,7 @@ public class Transaction extends AuditUser {
 
 
     @Column(name = "amount")
-    private BigDecimal amount;
+    private Long amount;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "transaction_type")

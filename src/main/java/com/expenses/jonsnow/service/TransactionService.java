@@ -34,10 +34,10 @@ public class TransactionService extends BaseService<Transaction,TransactionDTO, 
         transaction = super.create(transaction);
         TransactionSummary summary = transactionSummaryService.getSummary();
         switch (transaction.getType()){
-            case CASH_IN -> summary.setCashIn(transaction.getAmount().add(summary.getCashIn()));
-            case CASH_OUT -> summary.setCashOut(transaction.getAmount().add(summary.getCashOut()));
-            case LENT -> summary.setLent(transaction.getAmount().add(summary.getLent()));
-            case OWE -> summary.setOwe(transaction.getAmount().add(summary.getOwe()));
+            case CASH_IN -> summary.setCashIn(transaction.getAmount() + summary.getCashIn());
+            case CASH_OUT -> summary.setCashOut(transaction.getAmount() + summary.getCashOut());
+            case LENT -> summary.setLent(transaction.getAmount() + summary.getLent());
+            case OWE -> summary.setOwe(transaction.getAmount() + summary.getOwe());
         }
         transactionSummaryService.update(summary);
         return transaction;

@@ -11,7 +11,7 @@ import java.time.Instant;
 public class TransactionDTO {
     private Long id;
     private String note;
-    private BigDecimal amount;
+    private Long amount;
     private String type;
     private Instant date;
     private String paymentMode;

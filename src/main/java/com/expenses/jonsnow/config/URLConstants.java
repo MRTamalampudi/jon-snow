@@ -16,4 +16,5 @@ public class URLConstants {
     public static final String SPLIT_BILL_GROUP_MEMEBERS = "group_members";
     public static final String SPLIT_BILL = "split_bill";
     public static final String SPLIT_BILL_SHARE = "split_bill_share";
+    public static final String USER = "user";
 }

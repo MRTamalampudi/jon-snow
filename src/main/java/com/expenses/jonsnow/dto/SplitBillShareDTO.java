@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public class SplitBillShareDTO {
     private Long id;
     private SplitBillDTO bill;
-    private BigDecimal amount;
+    private Long amount;
     private SplitBillStatus status;
     private UserDTO user;
 }

@@ -2,9 +2,10 @@ package com.expenses.jonsnow.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.math.BigDecimal;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -36,8 +37,8 @@ public class SplitBillGroupMember extends Audit {
     private SplitBillGroup group;
 
     @Column(name = "owe_share")
-    private BigDecimal oweShare = new BigDecimal(0);
+    private Long oweShare = 0L;
 
     @Column(name = "lent_share")
-    private BigDecimal lentShare = new BigDecimal(0);
+    private Long lentShare = 0L;
 }

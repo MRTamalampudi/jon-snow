@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Generated;
 
-import java.math.BigDecimal;
-
 @Entity
 @Table(name = "transaction_summary")
 @Data
@@ -15,16 +13,16 @@ public class TransactionSummary {
     private Long id;
 
     @Column(name = "lent")
-    private BigDecimal lent;
+    private Long lent;
 
     @Column(name = "owe")
-    private BigDecimal owe;
+    private Long owe;
 
     @Column(name = "cash_in")
-    private BigDecimal cashIn;
+    private Long cashIn;
 
     @Column(name = "cash_out")
-    private BigDecimal cashOut;
+    private Long cashOut;
 
     @OneToOne
     @JoinColumn(name = "user_id")

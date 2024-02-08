@@ -20,11 +20,7 @@ public class SplitBill extends AuditCreatedBy {
     private String bill;
 
     @Column(name = "amount")
-    private BigDecimal amount;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "split_algo")
-    private SplitAlgo splitAlgo;
+    private Long amount;
 
     @Column(name = "date")
     private Instant date;
@@ -32,16 +28,26 @@ public class SplitBill extends AuditCreatedBy {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "split_bill_group_id",
-            nullable = false
+            nullable = false,
+            insertable = false,
+            updatable = false
     )
     private SplitBillGroup splitBillGroup;
+
+    @Column(name = "split_bill_group_id")
+    private Long splitBillGroupId;
 
     @ManyToOne
     @JoinColumn(
             name = "paid_by",
-            nullable = false
+            nullable = false,
+            insertable = false,
+            updatable = false
     )
     private User paidBy;
+
+    @Column(name = "paid_by")
+    private Long paidUserId;
 
     @OneToMany(
             mappedBy = "splitBill",
@@ -51,8 +57,13 @@ public class SplitBill extends AuditCreatedBy {
 
     @OneToMany(
             mappedBy = "bill",
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
     )
     private List<SplitBillShare> splitBillShareList;
 
+    @PrePersist
+    public void prePersist() {
+        splitBillShareList.forEach(splitBillShare -> splitBillShare.setBill(this));
+    }
 }

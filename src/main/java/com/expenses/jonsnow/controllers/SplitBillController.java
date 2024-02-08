@@ -2,6 +2,7 @@ package com.expenses.jonsnow.controllers;
 
 import com.expenses.jonsnow.config.URLConstants;
 import com.expenses.jonsnow.dto.SplitBillDTO;
+import com.expenses.jonsnow.dto.request.SplitBillRequest;
 import com.expenses.jonsnow.mapper.BaseMapper;
 import com.expenses.jonsnow.mapper.SplitBillMapper;
 import com.expenses.jonsnow.model.SplitBill;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = URLConstants.SPLIT_BILL)
-public class SplitBillController extends BaseController<SplitBill, SplitBillDTO,SplitBillDTO> {
+public class SplitBillController extends BaseController<SplitBill, SplitBillDTO, SplitBillRequest> {
 
     private static final SplitBillSpecificationBuilder builder =
             new SplitBillSpecificationBuilder(null);

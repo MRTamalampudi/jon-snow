@@ -1,11 +1,8 @@
 package com.expenses.jonsnow.model;
 
 import com.expenses.jonsnow.model.enums.SplitBillStatus;
-import com.expenses.jonsnow.model.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "split_bill_shares")
@@ -20,7 +17,7 @@ public class SplitBillShare extends Audit {
     private SplitBill bill;
 
     @Column(name = "amount")
-    private BigDecimal amount = BigDecimal.ZERO;
+    private Long amount = 0L;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
@@ -32,7 +29,12 @@ public class SplitBillShare extends Audit {
     )
     @JoinColumn(
             name = "user_id",
-            nullable = false
+            nullable = false,
+            insertable = false,
+            updatable = false
     )
     private User user;
+
+    @Column(name = "user_id")
+    private Long userId;
 }

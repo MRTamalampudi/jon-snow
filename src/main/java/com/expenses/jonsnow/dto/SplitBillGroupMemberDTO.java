@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 @Data
 public class SplitBillGroupMemberDTO {
     private Long id;
-    private BigDecimal oweShare;
-    private BigDecimal lentShare;
+    private Long oweShare;
+    private Long lentShare;
     private SplitBillGroupDTO group;
     private UserDTO member;
 }
