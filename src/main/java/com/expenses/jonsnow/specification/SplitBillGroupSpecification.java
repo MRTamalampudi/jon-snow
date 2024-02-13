@@ -11,6 +11,13 @@ public class SplitBillGroupSpecification extends BaseSpecification<SplitBillGrou
     @Override
     public Predicate toPredicate(Root<SplitBillGroup> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
         return switch (searchRequest.getKey()){
+            case "recent" -> {
+                Subquery<Long> subquery = query.subquery(Long.class);
+                Root<SplitBillGroup> subRoot = subquery.from(SplitBillGroup.class);
+                subquery.select(cb.max(subRoot.get("id")));
+
+                yield cb.equal(root.get("id"), subquery);
+            }
             default -> super.toPredicate(root, query, cb);
         };
     }
@@ -18,6 +25,7 @@ public class SplitBillGroupSpecification extends BaseSpecification<SplitBillGrou
     @Override
     protected Path<String> getPath(SearchRequest searchRequest, Root<SplitBillGroup> root) {
         return switch (searchRequest.getKey()){
+            case "recent" -> root.get("id");
             default -> super.getPath(searchRequest, root);
         };
     }
