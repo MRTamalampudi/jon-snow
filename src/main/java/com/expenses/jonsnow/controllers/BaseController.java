@@ -9,12 +9,11 @@ import com.expenses.jonsnow.specification.SearchRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.AbstractController;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public abstract class BaseController<Entity,DTO,Request> {
@@ -56,5 +55,15 @@ public abstract class BaseController<Entity,DTO,Request> {
                         mapper.mapRequestToEntity(request)
                 )
         );
+    }
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void update(@RequestBody Request request) throws
+            InvocationTargetException,
+            NoSuchMethodException,
+            IllegalAccessException
+    {
+        service.update(request);
     }
 }

@@ -63,7 +63,7 @@ public class SplitBillService extends BaseService<SplitBill, SplitBillDTO, Split
             } else {
                 sumary.setOwe(sumary.getOwe() + amount);
             }
-            transactionSummaryService.update(sumary);
+            transactionSummaryService.create(sumary);
         });
     }
 
@@ -83,7 +83,7 @@ public class SplitBillService extends BaseService<SplitBill, SplitBillDTO, Split
             } else {
                 member.setOweShare(member.getOweShare() + amount);
             }
-            groupMemberService.update(member);
+            groupMemberService.create(member);
         });
     }
 }

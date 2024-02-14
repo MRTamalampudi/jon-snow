@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +33,11 @@ public class TransactionService extends BaseService<Transaction,TransactionDTO, 
     @Override
     public Transaction create(Transaction transaction) {
         transaction = super.create(transaction);
+        updateTransactionSummary(transaction);
+        return transaction;
+    }
+
+    private void updateTransactionSummary(Transaction transaction) {
         TransactionSummary summary = transactionSummaryService.getSummary();
         switch (transaction.getType()){
             case CASH_IN -> summary.setCashIn(transaction.getAmount() + summary.getCashIn());
@@ -39,7 +45,13 @@ public class TransactionService extends BaseService<Transaction,TransactionDTO, 
             case LENT -> summary.setLent(transaction.getAmount() + summary.getLent());
             case OWE -> summary.setOwe(transaction.getAmount() + summary.getOwe());
         }
-        transactionSummaryService.update(summary);
+        transactionSummaryService.create(summary);
+    }
+
+    @Override
+    public Optional<Transaction> update(TransactionRequest transactionRequest) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Optional<Transaction> transaction= super.update(transactionRequest);
+        transaction.ifPresent(this::updateTransactionSummary);
         return transaction;
     }
 }

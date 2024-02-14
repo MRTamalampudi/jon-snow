@@ -8,7 +8,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class BaseService<Entity,DTO,Request> {
 
@@ -56,7 +59,13 @@ public abstract class BaseService<Entity,DTO,Request> {
         repo.deleteAllById(entityIds);
     }
 
-    public Entity update(Entity entity){
-        return repo.save(entity);
+    public Optional<Entity> update(Request request) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Class<?> c = request.getClass();
+        Method getId = c.getDeclaredMethod("getId");
+        Long id = (Long) getId.invoke(request);
+        Optional<Entity> entity = repo.findById(id);
+        entity.ifPresent(entity_ -> mapper.mapRequestToEntity(request,entity_));
+        entity.ifPresent(repo::save);
+        return entity;
     }
 }
