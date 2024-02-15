@@ -38,18 +38,14 @@ public class SplitBillGroupMemberController extends BaseController<SplitBillGrou
 
     @Override
     public Page<SplitBillGroupMemberDTO> index(List<SearchRequest> requests, Pageable pageable) {
-        Optional<SearchRequest> forGroupsList = requests.stream().filter(request -> "forGroupsList".equals(request.getKey())).findFirst();
-        if(forGroupsList.isPresent()){
-            requests.add(
-                    new SearchRequest(
-                            "member",
-                            Operator.EQUALITY,
-                            new AuditorAwareImpl().getCurrentAuditor().get().getId().toString(),
-                            null
-                    )
-            );
-            requests.remove(forGroupsList.get());
-        }
+        requests.add(
+                new SearchRequest(
+                        "member",
+                        Operator.EQUALITY,
+                        new AuditorAwareImpl().getCurrentAuditor().get().getId().toString(),
+                        null
+                )
+        );
         return super.index(requests, pageable);
     }
 }

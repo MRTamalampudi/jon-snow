@@ -11,8 +11,7 @@ import com.expenses.jonsnow.specification.Operator;
 import com.expenses.jonsnow.specification.SearchRequest;
 import com.expenses.jonsnow.specification.SplitBillGroupSpecification;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -35,8 +34,8 @@ public class SplitBillGroupsController extends BaseController<SplitBillGroup, Sp
     }
 
     @Override
-    public SplitBillGroupDTO get(Long entityId) throws NoSuchEntityException {
-        if(Objects.isNull(entityId)){
+    public SplitBillGroupDTO get(@PathVariable("entityId") Long entityId) throws NoSuchEntityException {
+        if(entityId.equals(0L)){
             SearchRequest request = new SearchRequest("recent", null,null,null);
             Specification<SplitBillGroup> groupSpecification = new SplitBillGroupSpecificationBuilder(List.of(request)).build();
             Optional<SplitBillGroup> group = service.findAll(groupSpecification).stream().findFirst();
