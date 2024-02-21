@@ -7,6 +7,7 @@ import jakarta.persistence.criteria.*;
 import java.util.Objects;
 
 public class SplitBillShareSpecification extends BaseSpecification<SplitBillShare> {
+
     public SplitBillShareSpecification(SearchRequest searchRequest) {
         super(searchRequest);
     }

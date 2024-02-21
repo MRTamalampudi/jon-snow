@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Transactional
 public interface TransactionRepo extends BaseRepo<Transaction,Long> {
+    Boolean existsByAmount(Long amount);
 }

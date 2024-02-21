@@ -1,5 +1,6 @@
 package com.expenses.jonsnow.dto;
 
+import com.expenses.jonsnow.model.SplitBillShare;
 import com.expenses.jonsnow.model.enums.SplitAlgo;
 import lombok.Data;
 
@@ -18,4 +19,5 @@ public class SplitBillDTO {
     private UserDTO createdBy;
     private Instant createdAt;
     private Instant modifiedAt;
+    private List<SplitBillShareDTO> splitBillShareList;
 }
