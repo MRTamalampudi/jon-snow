@@ -3,6 +3,8 @@ package com.expenses.jonsnow.service;
 import com.expenses.jonsnow.exceptions.NoSuchEntityException;
 import com.expenses.jonsnow.mapper.BaseMapper;
 import com.expenses.jonsnow.repository.BaseRepo;
+import jakarta.transaction.Transactional;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +15,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Optional;
 
+@Log4j2
 public abstract class BaseService<Entity,DTO,Request> {
 
     private final BaseRepo<Entity,Long> repo;
@@ -59,12 +62,15 @@ public abstract class BaseService<Entity,DTO,Request> {
         repo.deleteAllById(entityIds);
     }
 
+    @Transactional
     public Optional<Entity> update(Request request) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Class<?> c = request.getClass();
         Method getId = c.getDeclaredMethod("getId");
         Long id = (Long) getId.invoke(request);
         Optional<Entity> entity = repo.findById(id);
         entity.ifPresent(entity_ -> mapper.mapRequestToEntity(request,entity_));
+        log.info(entity);
+        repo.save(entity.get());
         entity.ifPresent(repo::save);
         return entity;
     }

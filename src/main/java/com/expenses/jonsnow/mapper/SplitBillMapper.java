@@ -3,15 +3,14 @@ package com.expenses.jonsnow.mapper;
 import com.expenses.jonsnow.dto.SplitBillDTO;
 import com.expenses.jonsnow.dto.SplitBillShareDTO;
 import com.expenses.jonsnow.dto.request.SplitBillRequest;
+import com.expenses.jonsnow.dto.request.SplitBillShareRequest;
 import com.expenses.jonsnow.model.SplitBill;
 import com.expenses.jonsnow.model.SplitBillShare;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
+import org.mapstruct.*;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface SplitBillMapper extends BaseMapper<SplitBill, SplitBillDTO, SplitBillRequest> {
 
     @Override
@@ -20,6 +19,7 @@ public interface SplitBillMapper extends BaseMapper<SplitBill, SplitBillDTO, Spl
             source = "splitBillShareList" ,
             qualifiedByName = "splitBillShareListToDTO"
     )
+    @Mapping( target = "splitBillGroup.memberList",ignore = true)
     SplitBillDTO mapEntityToDTO(SplitBill splitBill);
 
     @Named("splitBillShareListToDTO")
@@ -27,4 +27,9 @@ public interface SplitBillMapper extends BaseMapper<SplitBill, SplitBillDTO, Spl
 
     @Mapping(target = "bill",ignore = true)
     SplitBillShareDTO mapSplitBillShareToDTO(SplitBillShare splitBillShare);
+
+    @Override
+    @Mapping(target = "id" , ignore = true)
+    @Mapping(target = "splitBillShareList", ignore = true)
+    void mapRequestToEntity(SplitBillRequest splitBillRequest,@MappingTarget SplitBill splitBill);
 }

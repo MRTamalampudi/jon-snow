@@ -2,6 +2,7 @@ package com.expenses.jonsnow.controllers;
 
 import com.expenses.jonsnow.config.URLConstants;
 import com.expenses.jonsnow.dto.SplitBillShareDTO;
+import com.expenses.jonsnow.dto.request.SplitBillShareRequest;
 import com.expenses.jonsnow.mapper.SplitBillShareMapper;
 import com.expenses.jonsnow.model.AuditorAwareImpl;
 import com.expenses.jonsnow.model.SplitBillShare;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(URLConstants.SPLIT_BILL_SHARE)
-public class SplitBillShareController extends BaseController<SplitBillShare, SplitBillShareDTO,SplitBillShareDTO> {
+public class SplitBillShareController extends BaseController<SplitBillShare, SplitBillShareDTO, SplitBillShareRequest> {
 
     public static final SplitBillShareSpecificationBuilder builder =
             new SplitBillShareSpecificationBuilder(null);

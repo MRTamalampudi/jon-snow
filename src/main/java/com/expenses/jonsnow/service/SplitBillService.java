@@ -2,8 +2,10 @@ package com.expenses.jonsnow.service;
 
 import com.expenses.jonsnow.dto.SplitBillDTO;
 import com.expenses.jonsnow.dto.request.SplitBillRequest;
+import com.expenses.jonsnow.dto.request.SplitBillShareRequest;
 import com.expenses.jonsnow.mapper.BaseMapper;
 import com.expenses.jonsnow.mapper.SplitBillMapper;
+import com.expenses.jonsnow.mapper.SplitBillShareMapper;
 import com.expenses.jonsnow.model.SplitBill;
 import com.expenses.jonsnow.model.SplitBillGroupMember;
 import com.expenses.jonsnow.model.SplitBillShare;
@@ -17,8 +19,10 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -26,15 +30,26 @@ public class SplitBillService extends BaseService<SplitBill, SplitBillDTO, Split
 
     private final SplitBillGroupMemberService groupMemberService;
     private final TransactionSummaryService transactionSummaryService;
+    private final SplitBillMapper mapper;
+
+    private final SplitBillRepo repo ;
+    private final SplitBillShareMapper shareMapper;
+    private final SplitBillShareService splitBillShareService;
     public SplitBillService(
             SplitBillRepo repo,
             SplitBillMapper mapper,
             SplitBillGroupMemberService groupMemberService,
-            TransactionSummaryService transactionSummaryService
+            TransactionSummaryService transactionSummaryService,
+            SplitBillShareMapper shareMapper,
+            SplitBillShareService splitBillShareService
     ) {
         super(repo, mapper);
         this.groupMemberService = groupMemberService;
         this.transactionSummaryService = transactionSummaryService;
+        this.repo = repo;
+        this.shareMapper = shareMapper;
+        this.mapper = mapper;
+        this.splitBillShareService = splitBillShareService;
     }
 
     @Override
@@ -85,5 +100,19 @@ public class SplitBillService extends BaseService<SplitBill, SplitBillDTO, Split
             }
             groupMemberService.create(member);
         });
+    }
+
+    @Override
+    @Transactional
+    public Optional<SplitBill> update(SplitBillRequest splitBillRequest) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Optional<SplitBill> splitBill = this.repo.findById(splitBillRequest.getId());
+        splitBill.ifPresent(entity->this.mapper.mapRequestToEntity(splitBillRequest,entity));
+        this.repo.save(splitBill.get());
+        List<SplitBillShare> splitBillShareList = shareMapper.mapRequestListToEntityList(splitBillRequest.getSplitBillShareList());
+        splitBillShareList.forEach(splitBillShare -> {
+            splitBillShare.setBill(splitBill.get());
+            splitBillShareService.create(splitBillShare);
+        });
+        return splitBill;
     }
 }

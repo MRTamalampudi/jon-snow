@@ -3,6 +3,8 @@ package com.expenses.jonsnow.model;
 import com.expenses.jonsnow.model.enums.SplitBillStatus;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Entity
 @Table(name = "split_bill_shares")
@@ -14,6 +16,8 @@ public class SplitBillShare extends Audit {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "split_bill_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private SplitBill bill;
 
     @Column(name = "amount")

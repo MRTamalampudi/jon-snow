@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class SplitBillShareRequest {
+    private Long id;
     private Long amount;
     private Long userId;
     private SplitBillStatus status;

@@ -13,6 +13,7 @@ public class SplitBillDTO {
     private Long id;
     private String bill;
     private Long amount;
+    private SplitBillGroupDTO splitBillGroup;
     private SplitAlgo splitAlgo;
     private Instant date;
     private UserDTO paidBy;

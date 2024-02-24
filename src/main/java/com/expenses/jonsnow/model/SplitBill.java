@@ -3,6 +3,8 @@ package com.expenses.jonsnow.model;
 import com.expenses.jonsnow.model.enums.SplitAlgo;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -32,6 +34,7 @@ public class SplitBill extends AuditCreatedBy {
             insertable = false,
             updatable = false
     )
+    @ToString.Exclude
     private SplitBillGroup splitBillGroup;
 
     @Column(name = "split_bill_group_id")
@@ -50,20 +53,21 @@ public class SplitBill extends AuditCreatedBy {
     private Long paidUserId;
 
     @OneToMany(
-            mappedBy = "splitBill",
-            fetch = FetchType.LAZY
-    )
-    private List<Transaction> transactions;
-
-    @OneToMany(
             mappedBy = "bill",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL
     )
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<SplitBillShare> splitBillShareList;
 
     @PrePersist
     public void prePersist() {
+        splitBillShareList.forEach(splitBillShare -> splitBillShare.setBill(this));
+    }
+
+    @PreUpdate
+    public void preUpdate() {
         splitBillShareList.forEach(splitBillShare -> splitBillShare.setBill(this));
     }
 }
