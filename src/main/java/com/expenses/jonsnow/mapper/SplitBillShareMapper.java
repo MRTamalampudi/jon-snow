@@ -5,6 +5,7 @@ import com.expenses.jonsnow.dto.request.SplitBillShareRequest;
 import com.expenses.jonsnow.model.SplitBillShare;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -17,5 +18,8 @@ public interface SplitBillShareMapper extends BaseMapper<SplitBillShare, SplitBi
     SplitBillShareDTO mapEntityToDTO(SplitBillShare splitBillShare);
 
     List<SplitBillShare> mapRequestListToEntityList(List<SplitBillShareRequest> splitBillShareRequests);
+
+    @Mapping(target = "id",ignore = true)
+    void mapRequestToEntity(SplitBillShareRequest request, @MappingTarget SplitBillShare share);
 
 }

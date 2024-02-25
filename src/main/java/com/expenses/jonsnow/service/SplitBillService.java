@@ -103,16 +103,17 @@ public class SplitBillService extends BaseService<SplitBill, SplitBillDTO, Split
     }
 
     @Override
-    @Transactional
     public Optional<SplitBill> update(SplitBillRequest splitBillRequest) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Optional<SplitBill> splitBill = this.repo.findById(splitBillRequest.getId());
         splitBill.ifPresent(entity->this.mapper.mapRequestToEntity(splitBillRequest,entity));
-        this.repo.save(splitBill.get());
-        List<SplitBillShare> splitBillShareList = shareMapper.mapRequestListToEntityList(splitBillRequest.getSplitBillShareList());
-        splitBillShareList.forEach(splitBillShare -> {
-            splitBillShare.setBill(splitBill.get());
-            splitBillShareService.create(splitBillShare);
-        });
+        splitBill.ifPresent(
+                entity -> entity
+                        .getSplitBillShareList()
+                        .forEach(
+                                splitBillShare -> splitBillShare.setBill(splitBill.get())
+                        )
+        );
+        splitBill.ifPresent(this::create);
         return splitBill;
     }
 }

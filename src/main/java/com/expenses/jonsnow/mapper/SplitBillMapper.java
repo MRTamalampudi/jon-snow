@@ -30,6 +30,5 @@ public interface SplitBillMapper extends BaseMapper<SplitBill, SplitBillDTO, Spl
 
     @Override
     @Mapping(target = "id" , ignore = true)
-    @Mapping(target = "splitBillShareList", ignore = true)
     void mapRequestToEntity(SplitBillRequest splitBillRequest,@MappingTarget SplitBill splitBill);
 }
