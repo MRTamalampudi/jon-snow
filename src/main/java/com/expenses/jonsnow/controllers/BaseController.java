@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.AbstractController;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class BaseController<Entity,DTO,Request> {
 
@@ -62,8 +64,19 @@ public abstract class BaseController<Entity,DTO,Request> {
     public void update(@RequestBody Request request) throws
             InvocationTargetException,
             NoSuchMethodException,
-            IllegalAccessException
-    {
+            IllegalAccessException, NoSuchEntityException {
         service.update(request);
+    }
+
+    @DeleteMapping
+    public void delete(List<SearchRequest> requests){
+        List<Long> entityIds = requests.stream()
+                .filter(searchRequest -> "id".equals(searchRequest.getKey()))
+                .findFirst()
+                .map(searchRequest -> searchRequest.getValues().stream()
+                        .map(Long::parseLong)
+                        .collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
+        service.deleteAllById(entityIds);
     }
 }

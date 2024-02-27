@@ -2,6 +2,7 @@ package com.expenses.jonsnow.service;
 
 import com.expenses.jonsnow.dto.TransactionDTO;
 import com.expenses.jonsnow.dto.request.TransactionRequest;
+import com.expenses.jonsnow.exceptions.NoSuchEntityException;
 import com.expenses.jonsnow.model.Transaction;
 import com.expenses.jonsnow.model.TransactionSummary;
 import com.expenses.jonsnow.repository.BaseRepo;
@@ -49,7 +50,7 @@ public class TransactionService extends BaseService<Transaction,TransactionDTO, 
     }
 
     @Override
-    public Optional<Transaction> update(TransactionRequest transactionRequest) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public Optional<Transaction> update(TransactionRequest transactionRequest) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchEntityException {
         Optional<Transaction> transaction= super.update(transactionRequest);
         transaction.ifPresent(this::updateTransactionSummary);
         return transaction;

@@ -63,7 +63,7 @@ public abstract class BaseService<Entity,DTO,Request> {
     }
 
     @Transactional
-    public Optional<Entity> update(Request request) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public Optional<Entity> update(Request request) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchEntityException {
         Class<?> c = request.getClass();
         Method getId = c.getDeclaredMethod("getId");
         Long id = (Long) getId.invoke(request);
