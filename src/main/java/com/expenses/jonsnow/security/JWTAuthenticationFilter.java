@@ -1,6 +1,9 @@
 package com.expenses.jonsnow.security;
 
 import com.expenses.jonsnow.service.JPAUserDetailsService;
+import com.expenses.jonsnow.service.JWTService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -25,6 +28,8 @@ public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFil
 
     @Autowired
     private JPAUserDetailsService userDetailsService;
+    @Autowired
+    private JWTService jwtService;
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         super("/**/*");
         this.setAuthenticationManager(authenticationManager);
@@ -34,9 +39,10 @@ public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFil
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
         Cookie[] cookies = request.getCookies();
         Optional<Cookie> cookie = Arrays.stream(cookies)
-                .filter(cookie1 -> "username".equals(cookie1.getName()))
+                .filter(cookie1 -> jwtService.getCookieName().equals(cookie1.getName()))
                 .findFirst();
-        UserDetails userDetails = userDetailsService.loadUserByUsername(cookie.get().getValue());
+        Jws<Claims> claimsJws = jwtService.parseToken(cookie.isPresent() ? cookie.get().getValue() : "");
+        UserDetails userDetails = userDetailsService.loadUserByUsername(claimsJws.getPayload().get("email").toString());
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails,userDetails.getPassword());
         return this.getAuthenticationManager().authenticate(authentication);
     }

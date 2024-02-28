@@ -1,7 +1,12 @@
 package com.expenses.jonsnow.security;
 
 import com.expenses.jonsnow.config.URLConstants;
+import com.expenses.jonsnow.model.SecurityUser;
+import com.expenses.jonsnow.model.User;
 import com.expenses.jonsnow.model.UsernamePassword;
+import com.expenses.jonsnow.service.JWTService;
+import com.expenses.jonsnow.service.UserContext;
+import com.expenses.jonsnow.service.UserService;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
@@ -9,6 +14,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,6 +31,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 public class UsernamePasswordFilter extends AbstractAuthenticationProcessingFilter {
+
+    @Autowired
+    private JWTService jwtService;
+    @Autowired
+    private UserService userService;
 
     public UsernamePasswordFilter(AuthenticationManager authenticationManager) {
         super("/login");
@@ -59,8 +70,8 @@ public class UsernamePasswordFilter extends AbstractAuthenticationProcessingFilt
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        response.setHeader("username", authResult.getName());
-        Cookie cookie = new Cookie("username",authResult.getName());
+        User user = ((SecurityUser) authResult.getPrincipal()).getUser();
+        Cookie cookie = new Cookie(jwtService.getCookieName(), jwtService.generateToken(user));
         cookie.setDomain("dev.expenses.io");
         cookie.setPath("/");
         cookie.setHttpOnly(true);
