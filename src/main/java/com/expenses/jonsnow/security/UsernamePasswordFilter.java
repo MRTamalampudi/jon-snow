@@ -1,13 +1,10 @@
 package com.expenses.jonsnow.security;
 
-import com.expenses.jonsnow.config.URLConstants;
 import com.expenses.jonsnow.model.SecurityUser;
 import com.expenses.jonsnow.model.User;
 import com.expenses.jonsnow.model.UsernamePassword;
 import com.expenses.jonsnow.service.JWTService;
-import com.expenses.jonsnow.service.UserContext;
 import com.expenses.jonsnow.service.UserService;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -15,17 +12,11 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
-import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -72,7 +63,7 @@ public class UsernamePasswordFilter extends AbstractAuthenticationProcessingFilt
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         User user = ((SecurityUser) authResult.getPrincipal()).getUser();
         Cookie cookie = new Cookie(jwtService.getCookieName(), jwtService.generateToken(user));
-        cookie.setDomain("dev.expenses.io");
+        cookie.setDomain("expenses.io");
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         response.addCookie(cookie);

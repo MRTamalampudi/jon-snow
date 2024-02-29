@@ -3,10 +3,14 @@ package com.expenses.jonsnow.config;
 import com.expenses.jonsnow.security.JWTAuthenticationFilter;
 import com.expenses.jonsnow.security.UsernamePasswordFilter;
 import com.expenses.jonsnow.service.JPAUserDetailsService;
+import com.expenses.jonsnow.service.JWTService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -20,6 +24,11 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -33,6 +42,8 @@ public class WebSecurityConfig {
 
     @Autowired
     private JPAUserDetailsService userDetailsService;
+    @Autowired
+    private JWTService jwtService;
 
     @Bean
     public UsernamePasswordFilter usernamePasswordFilter(){
@@ -48,6 +59,22 @@ public class WebSecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(requests-> requests.anyRequest().permitAll());
         http.csrf(csrf -> csrf.disable());
+        http.logout(logout-> {
+            logout
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .clearAuthentication(true)
+                    .logoutSuccessUrl("/")
+                    .logoutSuccessHandler((request, response, authentication) -> {
+                        Cookie cookie = new Cookie(jwtService.getCookieName(), null);
+                        cookie.setDomain("expenses.io");
+                        cookie.setPath("/");
+                        cookie.setHttpOnly(true);
+                        request.getSession().invalidate();
+                        response.addCookie(cookie);
+                    })
+                    .invalidateHttpSession(true)
+                    .permitAll();
+        });
         http.addFilterBefore(jwtAuthenticationFilter(),UsernamePasswordAuthenticationFilter.class);
         http.cors(Customizer.withDefaults());
         http.addFilterBefore(usernamePasswordFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -62,12 +89,6 @@ public class WebSecurityConfig {
 
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
-        List<String> allowedMethods = Arrays.asList(
-                HttpMethod.GET.toString(),
-                HttpMethod.DELETE.toString(),
-                HttpMethod.POST.toString(),
-                HttpMethod.PUT.toString()
-        );
         CorsConfiguration cors = new CorsConfiguration();
         cors.addAllowedOrigin("http://*.expenses.io");
         cors.addAllowedHeader("*");
