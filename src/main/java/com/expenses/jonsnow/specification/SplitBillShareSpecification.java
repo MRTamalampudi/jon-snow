@@ -15,6 +15,7 @@ public class SplitBillShareSpecification extends BaseSpecification<SplitBillShar
     @Override
     public Predicate toPredicate(Root<SplitBillShare> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
         return switch (searchRequest.getKey()){
+            case "billName" -> cb.like(getPath(searchRequest,root),'%' + searchRequest.getValue()+'%');
             case "group" -> {
                 if(Objects.equals(String.valueOf(0),searchRequest.getValue())){
                     Subquery<Long> subquery = query.subquery(Long.class);
@@ -34,6 +35,7 @@ public class SplitBillShareSpecification extends BaseSpecification<SplitBillShar
     @Override
     protected Path<String> getPath(SearchRequest searchRequest, Root<SplitBillShare> root) {
         return switch (searchRequest.getKey()){
+            case "billName" -> root.join("bill").get("bill");
             case "group" -> root.join("bill").join("splitBillGroup").get("id");
             case "user" -> root.join("user").get("id");
             default -> super.getPath(searchRequest, root);

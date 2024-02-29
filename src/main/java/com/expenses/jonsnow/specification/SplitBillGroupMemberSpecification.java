@@ -12,6 +12,7 @@ public class SplitBillGroupMemberSpecification extends BaseSpecification<SplitBi
     @Override
     public Predicate toPredicate(Root<SplitBillGroupMember> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
         return switch (searchRequest.getKey()){
+            case "groupName" -> cb.like(getPath(searchRequest,root),'%' + searchRequest.getValue()+'%');
             case "group", "member" -> cb.equal(getPath(searchRequest,root),searchRequest.getValue());
             default -> super.toPredicate(root, query, cb);
         };
@@ -20,6 +21,7 @@ public class SplitBillGroupMemberSpecification extends BaseSpecification<SplitBi
     @Override
     protected Path<String> getPath(SearchRequest searchRequest, Root<SplitBillGroupMember> root) {
         return switch (searchRequest.getKey()){
+            case "groupName" -> root.join("group").get("name");
             case "group" -> root.join("group").get("id");
             case "member" -> root.join("member").get("id");
             default -> super.getPath(searchRequest, root);
