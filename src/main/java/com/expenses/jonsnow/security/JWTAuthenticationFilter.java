@@ -59,6 +59,8 @@ public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFil
 
     @Override
     protected boolean requiresAuthentication(HttpServletRequest request, HttpServletResponse response) {
-        return super.requiresAuthentication(request, response) && !(new AntPathRequestMatcher("/login").matches(request));
+        return super.requiresAuthentication(request, response)
+                && !(new AntPathRequestMatcher("/login").matches(request))
+                && !(new AntPathRequestMatcher("/user/signup").matches(request));
     }
 }

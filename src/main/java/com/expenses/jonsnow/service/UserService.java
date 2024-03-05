@@ -1,6 +1,7 @@
 package com.expenses.jonsnow.service;
 
 import com.expenses.jonsnow.dto.UserDTO;
+import com.expenses.jonsnow.dto.request.UserRequest;
 import com.expenses.jonsnow.mapper.UserMapper;
 import com.expenses.jonsnow.model.User;
 import com.expenses.jonsnow.repository.UserRepo;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserService extends BaseService<User, UserDTO,UserDTO> {
+public class UserService extends BaseService<User, UserDTO, UserRequest> {
 
     public UserService(UserRepo repo, UserMapper mapper) {
         super(repo, mapper);

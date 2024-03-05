@@ -3,6 +3,7 @@ package com.expenses.jonsnow.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -13,7 +14,6 @@ import java.time.Instant;
 
 @MappedSuperclass
 @Data
-@EntityListeners(AuditingEntityListener.class)
 public abstract class Audit {
     @CreatedDate
     @Column(
@@ -29,4 +29,10 @@ public abstract class Audit {
             nullable = false
     )
     private Instant modifiedAt;
+
+    @PrePersist
+    public void prepersist(){
+        this.createdAt = Instant.now();
+        this.modifiedAt = Instant.now();
+    }
 }
