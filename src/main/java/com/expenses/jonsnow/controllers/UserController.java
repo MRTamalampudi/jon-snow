@@ -7,6 +7,7 @@ import com.expenses.jonsnow.mapper.UserMapper;
 import com.expenses.jonsnow.model.User;
 import com.expenses.jonsnow.repository.UserRepo;
 import com.expenses.jonsnow.service.UserContext;
+import com.expenses.jonsnow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +16,11 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserMapper mapper;
-    private final UserRepo repo;
+    private final UserService service;
 
-    public UserController(UserMapper mapper, UserRepo repo) {
+    public UserController(UserMapper mapper, UserService service) {
         this.mapper = mapper;
-        this.repo = repo;
+        this.service = service;
     }
 
     @GetMapping
@@ -30,7 +31,7 @@ public class UserController {
     @PostMapping("/signup")
     public void create(@RequestBody UserRequest userRequest){
         User user = mapper.mapRequestToEntity(userRequest);
-        this.repo.save(user);
+        service.create(user);
     }
 }
 

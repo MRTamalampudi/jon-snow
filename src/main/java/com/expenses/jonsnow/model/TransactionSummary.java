@@ -13,16 +13,16 @@ public class TransactionSummary {
     private Long id;
 
     @Column(name = "lent")
-    private Long lent;
+    private Long lent = 0L;
 
     @Column(name = "owe")
-    private Long owe;
+    private Long owe = 0L;
 
     @Column(name = "cash_in")
-    private Long cashIn;
+    private Long cashIn = 0L;
 
     @Column(name = "cash_out")
-    private Long cashOut;
+    private Long cashOut = 0L;
 
     @OneToOne
     @JoinColumn(name = "user_id")
