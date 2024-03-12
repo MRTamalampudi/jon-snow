@@ -9,6 +9,5 @@ import java.util.Optional;
 @Repository
 public interface TransactionSummaryRepo extends BaseRepo<TransactionSummary,Long> {
 
-    TransactionSummary findByUser(User user);
-
+    Optional<TransactionSummary> findByUser(User user);
 }

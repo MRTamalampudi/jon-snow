@@ -3,12 +3,12 @@ package com.expenses.jonsnow.service;
 import com.expenses.jonsnow.exceptions.NoSuchEntityException;
 import com.expenses.jonsnow.mapper.BaseMapper;
 import com.expenses.jonsnow.repository.BaseRepo;
-import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -25,6 +25,7 @@ public abstract class BaseService<Entity,DTO,Request> {
         this.mapper = mapper;
     }
 
+    @Transactional(readOnly = true)
     public Page<DTO> index(Specification<Entity> specification, Pageable pageable){
         Page<Entity> entityPage = repo.findAll(specification,pageable);
         List<DTO> dtoList = mapper.mapEntityListtoDTOList(entityPage.getContent());

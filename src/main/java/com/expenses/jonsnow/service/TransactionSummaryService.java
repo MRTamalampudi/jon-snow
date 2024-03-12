@@ -8,6 +8,8 @@ import com.expenses.jonsnow.model.User;
 import com.expenses.jonsnow.repository.TransactionSummaryRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class TransactionSummaryService extends BaseService<TransactionSummary, TransactionSummaryDTO,TransactionSummaryDTO> {
 
@@ -22,6 +24,10 @@ public class TransactionSummaryService extends BaseService<TransactionSummary, T
     public TransactionSummary getSummary(){
         AuditorAwareImpl auditorAware = new AuditorAwareImpl();
         User user = auditorAware.getCurrentAuditor().orElse(new User());
+        return this.repo.findByUser(user).get();
+    }
+
+    public Optional<TransactionSummary> findByUser(User user){
         return this.repo.findByUser(user);
     }
 }

@@ -62,5 +62,4 @@ public class Transaction extends AuditUser {
     @JoinColumn(name = "budget_item_id")
     private BudgetItem budgetItem;
 
-
 }
