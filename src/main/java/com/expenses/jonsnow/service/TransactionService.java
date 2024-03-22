@@ -28,59 +28,23 @@ import java.util.function.Consumer;
 @Service
 @Transactional
 public class TransactionService extends BaseService<Transaction,TransactionDTO, TransactionRequest>{
-
-    private final TransactionSummaryService transactionSummaryService;
-    private final TransactionRepo repo;
-
+    
     public TransactionService(TransactionRepo repo, TransactionMapper mapper, TransactionSummaryService transactionSummaryService) {
         super(repo,mapper);
-        this.transactionSummaryService = transactionSummaryService;
-        this.repo = repo;
     }
 
     @Override
     public Transaction create(Transaction transaction) {
-        transaction = super.create(transaction);
-        updateTransactionSummary(transaction);
-        return transaction;
-    }
-
-    private void updateTransactionSummary(Transaction transaction) {
-        TransactionSummary summary = transactionSummaryService.getSummary();
-        Long amount = repo.getAmountSum(transaction.getUser().getId(),transaction.getType().toString());
-        switch (transaction.getType()) {
-            case CASH_IN -> summary.setCashIn(amount);
-            case CASH_OUT -> summary.setCashOut(amount);
-            case LENT -> summary.setLent(amount);
-            case OWE -> summary.setOwe(amount);
-        }
-        transactionSummaryService.create(summary);
+        return super.create(transaction);
     }
 
     @Override
     public Optional<Transaction> update(TransactionRequest transactionRequest) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchEntityException {
-        Optional<Transaction> transaction= super.update(transactionRequest);
-        transaction.ifPresent(this::updateTransactionSummary);
-        return transaction;
+        return super.update(transactionRequest);
     }
 
     @Override
     public void deleteAllById(List<Long> entityIds) {
         super.deleteAllById(entityIds);
-        updateTransactionSummary();
-    }
-
-    private void updateTransactionSummary() {
-        List<TransactionSumm> transactionSumms = repo.sumAmount(UserContext.getUser().getId());
-        TransactionSummary summary = transactionSummaryService.getSummary();
-        transactionSumms.forEach(transactionSumm -> {
-            switch (transactionSumm.getType()){
-                case CASH_IN -> summary.setCashIn(transactionSumm.getAmount());
-                case CASH_OUT -> summary.setCashOut(transactionSumm.getAmount());
-                case LENT -> summary.setLent(transactionSumm.getAmount());
-                case OWE -> summary.setOwe(transactionSumm.getAmount());
-            }
-        });
-        transactionSummaryService.create(summary);
     }
 }
