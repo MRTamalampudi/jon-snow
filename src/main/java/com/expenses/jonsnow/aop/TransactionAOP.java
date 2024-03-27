@@ -1,4 +1,4 @@
-package com.expenses.jonsnow.aoc;
+package com.expenses.jonsnow.aop;
 
 import com.expenses.jonsnow.model.TransactionSummary;
 import com.expenses.jonsnow.pojo.TransactionSumm;
@@ -17,19 +17,21 @@ import java.util.List;
 @Aspect
 @Log4j2
 @Component
-public class TransactionAOC {
+public class TransactionAOP {
 
     private final TransactionSummaryService summaryService;
     private final TransactionRepo transactionRepo;
 
-    public TransactionAOC(TransactionSummaryService summaryService,TransactionRepo transactionRepo) {
+    public TransactionAOP(TransactionSummaryService summaryService, TransactionRepo transactionRepo) {
         this.summaryService = summaryService;
         this.transactionRepo = transactionRepo;
     }
 
-    @After("execution(* com.expenses.jonsnow.service.TransactionService.create(..)) " +
+    @After(
+            "execution(* com.expenses.jonsnow.service.TransactionService.create(..)) " +
             "|| execution(* com.expenses.jonsnow.service.TransactionService.update(..)) " +
-            "|| execution(* com.expenses.jonsnow.service.TransactionService.deleteAllById(..)) ")
+            "|| execution(* com.expenses.jonsnow.service.TransactionService.deleteAllById(..)) "
+    )
     public void doNothing(JoinPoint joinPoint){
       updateTransactionSummary();
     }

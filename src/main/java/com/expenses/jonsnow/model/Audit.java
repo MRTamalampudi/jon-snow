@@ -14,6 +14,7 @@ import java.time.Instant;
 
 @MappedSuperclass
 @Data
+@EntityListeners(AuditingEntityListener.class)
 public abstract class Audit {
     @CreatedDate
     @Column(
@@ -29,10 +30,4 @@ public abstract class Audit {
             nullable = false
     )
     private Instant modifiedAt;
-
-    @PrePersist
-    public void prepersist(){
-        this.createdAt = Instant.now();
-        this.modifiedAt = Instant.now();
-    }
 }

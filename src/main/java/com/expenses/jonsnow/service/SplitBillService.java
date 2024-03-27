@@ -55,13 +55,13 @@ public class SplitBillService extends BaseService<SplitBill, SplitBillDTO, Split
     @Override
     @Transactional
     public SplitBill create(SplitBill splitBill) {
-        for (SplitBillShare splitBillShare : splitBill.getSplitBillShareList()) {
-            Long groupId = splitBill.getSplitBillGroupId();
-            Long userId = splitBillShare.getUserId();
-
-            updateTransactionSummary(splitBill, splitBillShare, userId);
-            updateGroupMembersShare(splitBill, splitBillShare, groupId, userId);
-        }
+//        for (SplitBillShare splitBillShare : splitBill.getSplitBillShareList()) {
+//            Long groupId = splitBill.getSplitBillGroupId();
+//            Long userId = splitBillShare.getUserId();
+//
+////            updateTransactionSummary(splitBill, splitBillShare, userId);
+////            updateGroupMembersShare(splitBill, splitBillShare, groupId, userId);
+//        }
         return super.create(splitBill);
     }
 

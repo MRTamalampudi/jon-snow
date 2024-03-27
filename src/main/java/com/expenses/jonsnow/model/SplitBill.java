@@ -55,7 +55,7 @@ public class SplitBill extends AuditCreatedBy {
     @OneToMany(
             mappedBy = "bill",
             fetch = FetchType.LAZY,
-            cascade = CascadeType.MERGE
+            cascade = CascadeType.ALL
     )
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
@@ -64,5 +64,6 @@ public class SplitBill extends AuditCreatedBy {
     @PrePersist
     public void prePersist() {
         splitBillShareList.forEach(splitBillShare -> splitBillShare.setBill(this));
+        Integer a = 1+1;
     }
 }
