@@ -30,4 +30,18 @@ public enum SplitBillStatus {
     private final String name;
     private final String description;
 
+    public Boolean isPaid(){
+       return SplitBillStatus.PAID.equals(this);
+    }
+    public Boolean isPending(){
+        return SplitBillStatus.PENDING.equals(this);
+    }
+
+    public Boolean isRequestedClearence(){
+        return SplitBillStatus.REQUESTED_CLEARENCE.equals(this);
+    }
+
+    public Boolean isCleared(){
+        return SplitBillStatus.CLEARED.equals(this);
+    }
 }

@@ -64,6 +64,5 @@ public class SplitBill extends AuditCreatedBy {
     @PrePersist
     public void prePersist() {
         splitBillShareList.forEach(splitBillShare -> splitBillShare.setBill(this));
-        Integer a = 1+1;
     }
 }
