@@ -78,4 +78,9 @@ public class SplitBillService extends BaseService<SplitBill, SplitBillDTO, Split
         splitBill.ifPresent(this::create);
         return splitBill;
     }
+
+    @Override
+    public void deleteAllById(List<Long> entityIds) {
+        super.deleteAllById(entityIds);
+    }
 }

@@ -11,13 +11,18 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Aspect
 @Component
@@ -26,6 +31,7 @@ public class SplitBillAOP {
 
     public static final String CREATE_BILL_POINTCUT = "execution(* com.expenses.jonsnow.service.SplitBillService.create(..))";
     public static final String UPDATE_BILL_POINTCUT = "execution(* com.expenses.jonsnow.service.SplitBillService.update(..)) && args(splitBillRequest)";
+    public static final String DELETE_BILL_POINTCUT = "execution(* com.expenses.jonsnow.service.SplitBillService.deleteAllById(..)) && args(entityIds)";
     private final SplitBillGroupMemberService groupMemberService;
     private final SplitBillRepo repo;
 
@@ -66,6 +72,21 @@ public class SplitBillAOP {
                 memberList
         );
         groupMemberService.saveAll(memberList);
+    }
+
+    @Before(DELETE_BILL_POINTCUT)
+    public void doBeforeDeleting(List<Long> entityIds) {
+        List<SplitBill> splitBills = repo.findAllById(entityIds);
+        Long groupId = splitBills.stream().findFirst().map(SplitBill::getSplitBillGroupId).get();
+        List<SplitBillGroupMember> memberList= groupMemberService.findByGroupId(groupId);
+
+        splitBills.forEach(splitBill -> {
+            updateShares(
+                    splitBill,
+                    (a,b)->a-b,
+                    memberList
+            );
+        });
     }
 
     private void updateShares(
