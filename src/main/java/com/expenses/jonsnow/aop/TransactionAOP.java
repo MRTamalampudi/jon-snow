@@ -36,15 +36,6 @@ public class TransactionAOP {
         this.transactionRepo = transactionRepo;
     }
 
-//    @After(
-//            "execution(* com.expenses.jonsnow.service.TransactionService.create(..)) " +
-//            "|| execution(* com.expenses.jonsnow.service.TransactionService.update(..)) " +
-//            "|| execution(* com.expenses.jonsnow.service.TransactionService.deleteAllById(..)) "
-//    )
-//    public void doNothing(JoinPoint joinPoint) {
-//      updateTransactionSummary();
-//    }
-
     @AfterReturning(
             value = CREATE_POINTCUT,
             returning = "transaction"
