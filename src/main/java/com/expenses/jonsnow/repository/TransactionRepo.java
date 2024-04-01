@@ -13,7 +13,7 @@ import java.util.List;
 public interface TransactionRepo extends BaseRepo<Transaction,Long> {
 
     @Query(value = "select sum(amount) from `transactions` where `user_id` = :userId and `transaction_type` = :transactionType group by `transaction_type`",nativeQuery = true)
-    Long getAmountSum(Long userId, String transactionType);
+    Long findAmountSumByUserIdAndTransactionType(Long userId, String transactionType);
 
     @Query(value = "select sum(amount) as amount,transaction_type as type " +
             "from `transactions` " +

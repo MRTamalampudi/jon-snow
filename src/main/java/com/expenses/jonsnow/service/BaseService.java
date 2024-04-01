@@ -70,7 +70,6 @@ public abstract class BaseService<Entity,DTO,Request> {
         Long id = (Long) getId.invoke(request);
         Optional<Entity> entity = repo.findById(id);
         entity.ifPresent(entity_ -> mapper.mapRequestToEntity(request,entity_));
-        log.info(entity);
         repo.save(entity.get());
         entity.ifPresent(repo::save);
         return entity;
