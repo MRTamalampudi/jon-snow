@@ -1,5 +1,6 @@
 package com.expenses.jonsnow.specification;
 
+import com.expenses.jonsnow.model.SplitBill;
 import com.expenses.jonsnow.model.SplitBillGroup;
 import com.expenses.jonsnow.model.SplitBillShare;
 import jakarta.persistence.criteria.*;
@@ -19,8 +20,8 @@ public class SplitBillShareSpecification extends BaseSpecification<SplitBillShar
             case "group" -> {
                 if(Objects.equals(String.valueOf(0),searchRequest.getValue())){
                     Subquery<Long> subquery = query.subquery(Long.class);
-                    Root<SplitBillShare> subRoot = subquery.from(SplitBillShare.class);
-                    subquery.select(cb.max(subRoot.get("bill").get("splitBillGroup").get("id")));
+                    Root<SplitBill> subRoot = subquery.from(SplitBill.class);
+                    subquery.select(cb.max(subRoot.get("id")));
 
                     yield cb.equal(root.join("bill").join("splitBillGroup").get("id"), subquery);
                 } else {

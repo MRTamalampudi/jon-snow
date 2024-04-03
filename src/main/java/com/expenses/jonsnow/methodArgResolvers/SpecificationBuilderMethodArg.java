@@ -46,7 +46,7 @@ public class SpecificationBuilderMethodArg implements HandlerMethodArgumentResol
         Pattern pattern = Pattern.compile(
                         "(\\w+?)" +
                         "("+operators+")" +
-                        "([a-zA-Z_0-9\\,\\.\\-\\&\\\\^\\(\\)\\%\\\\$\\s\\p{L}]+)" +
+                        "([a-zA-Z_0-9,.\\-&\\\\^()%\\\\$\\s\\p{L}]+)" +
                         ";");
         Matcher matcher = pattern.matcher(query+";");
         while (matcher.find()){
