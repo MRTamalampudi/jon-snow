@@ -20,5 +20,6 @@ public interface SplitBillGroupMapper extends BaseMapper<SplitBillGroup, SplitBi
     @Named("mapMemberListToDTOList")
     List<SplitBillGroupMemberDTO> mapMemberListToDTOList(List<SplitBillGroupMember> splitBillGroupMembers);
     @Mapping(target = "group",ignore = true)
+    @Mapping(target = "member", source = "user")
     SplitBillGroupMemberDTO mapMembertoDTO(SplitBillGroupMember member);
 }

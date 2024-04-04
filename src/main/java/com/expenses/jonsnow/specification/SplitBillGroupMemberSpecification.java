@@ -23,7 +23,7 @@ public class SplitBillGroupMemberSpecification extends BaseSpecification<SplitBi
         return switch (searchRequest.getKey()){
             case "groupName" -> root.join("group").get("name");
             case "group" -> root.join("group").get("id");
-            case "member" -> root.join("member").get("id");
+            case "member" -> root.join("user").get("id");
             default -> super.getPath(searchRequest, root);
         };
     }

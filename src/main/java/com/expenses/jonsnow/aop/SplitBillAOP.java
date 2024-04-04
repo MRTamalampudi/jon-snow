@@ -14,15 +14,11 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 @Aspect
 @Component
@@ -107,7 +103,7 @@ public class SplitBillAOP {
 
         Consumer<SplitBillShare> shareConsumer = splitBillShare -> {
             for(SplitBillGroupMember groupMember:memberList){
-                if(!groupMember.getMember().getId().equals(splitBillShare.getUserId())){
+                if(!groupMember.getUser().getId().equals(splitBillShare.getUserId())){
                     continue;
                 }
                 if(splitBillShare.getStatus().isPending() || splitBillShare.getStatus().isRequestedClearence()){

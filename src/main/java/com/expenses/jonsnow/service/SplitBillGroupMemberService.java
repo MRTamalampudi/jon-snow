@@ -9,6 +9,8 @@ import com.expenses.jonsnow.repository.SplitBillGroupMemberRepo;
 import com.expenses.jonsnow.specification.Builder.SplitBillGroupMemberSpecificationBuilder;
 import com.expenses.jonsnow.specification.Operator;
 import com.expenses.jonsnow.specification.SearchRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +20,10 @@ import java.util.List;
 public class SplitBillGroupMemberService extends BaseService<SplitBillGroupMember, SplitBillGroupMemberDTO,SplitBillGroupMemberDTO> {
 
     private final SplitBillGroupMemberRepo repo;
-    private final SplitBillGroupMembersMapper mapper;
 
     public SplitBillGroupMemberService(SplitBillGroupMemberRepo repo, SplitBillGroupMembersMapper mapper) {
         super(repo, mapper);
         this.repo = repo;
-        this.mapper = mapper;
     }
 
     public List<SplitBillGroupMember> findByGroupId(Long groupId){

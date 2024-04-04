@@ -54,7 +54,7 @@ public class SplitBillGroupsService extends BaseService<SplitBillGroup, SplitBil
     private List<SplitBillGroupMember> createSplitBillGroupMembers(List<User> users, SplitBillGroup finalSplitBillGroup) {
         return users.stream().map(user -> {
             SplitBillGroupMember member = new SplitBillGroupMember();
-            member.setMember(user);
+            member.setUser(user);
             member.setGroup(finalSplitBillGroup);
             return member;
         }).peek(memberService::create).toList();
@@ -74,7 +74,7 @@ public class SplitBillGroupsService extends BaseService<SplitBillGroup, SplitBil
     }
 
     private List<String> getEmails(SplitBillGroup splitBillGroup) {
-        Function<SplitBillGroupMember,String> getGroupMemberEmail = groupMember -> groupMember.getMember().getEmail();
+        Function<SplitBillGroupMember,String> getGroupMemberEmail = groupMember -> groupMember.getUser().getEmail();
         List<String> emails = splitBillGroup
                 .getMemberList()
                 .stream()

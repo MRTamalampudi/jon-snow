@@ -21,10 +21,10 @@ public class SplitBillGroupMember extends Audit {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
-            name = "member_id",
+            name = "user_id",
             nullable = false
     )
-    private User member;
+    private User user;
 
     @ManyToOne(
             fetch = FetchType.LAZY
